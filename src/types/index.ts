@@ -1,0 +1,21 @@
+export type Status = "Pending" | "In Progress" | "Overdue" | "Completed";
+export type Priority = "Low" | "Medium" | "High";
+
+export interface Task {
+  id: number;
+  name: string;
+  category: string;
+  dueDate: Date;
+  status: Status;
+  priority: Priority;
+}
+
+export interface TaskListProps {
+  tasks: Task[];
+  onDelete: (taskId: number) => void;
+  onEdit: (taskId: number) => void;
+}
+
+export interface TaskFormProps {
+  onDataChange: () => void;
+}
