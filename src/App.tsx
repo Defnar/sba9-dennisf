@@ -1,11 +1,8 @@
-
-import './App.css'
+import "./App.css";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
-
-  return (
-    <h1>This is a test</h1>
-  )
+  return <Dashboard />;
 }
 
-export default App
+export default App;
