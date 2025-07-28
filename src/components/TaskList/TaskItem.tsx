@@ -18,7 +18,7 @@ export default function TaskItem({task, onDelete, onEdit}: TaskProps) {
             <div>{task.dueDate.toLocaleDateString()}</div>
             <div>{task.status}</div>
             <button onClick={() => handleEdit(task.id)}>Edit</button>
-            <button onClick={() => handleDelete(task.id)}>X</button>
+            <button onClick={() => handleDelete(task.id)}>Del</button>
         </li>
     )
     
