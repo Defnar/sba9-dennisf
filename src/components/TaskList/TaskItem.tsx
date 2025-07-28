@@ -1,4 +1,4 @@
-import type { TaskProps } from "../../types";
+import type { Status, TaskProps } from "../../types";
 
 export default function TaskItem({
   task,
@@ -7,7 +7,7 @@ export default function TaskItem({
   onStatusChange,
 }: TaskProps) {
   //status list to create dropdown box
-  const status = ["Pending", "In Progress", "Overdue", "Completed"];
+  const status= ["Pending", "In Progress", "Overdue", "Completed"];
 
   //create dropdown list for statuses
 
@@ -28,7 +28,7 @@ export default function TaskItem({
 
   //callback function for handling status
   const handleChangeStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onStatusChange(task.id, event.target.value);
+    onStatusChange(task.id, event.target.value as Status);
   };
 
   return (

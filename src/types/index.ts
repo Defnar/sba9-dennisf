@@ -14,8 +14,16 @@ export interface TaskListProps {
   tasks: Task[];
   onDelete: (taskId: number) => void;
   onEdit: (taskId: number) => void;
+  onStatusChange: (taskId: number, status: Status) => void;
 }
 
 export interface TaskFormProps {
   onDataChange: () => void;
+}
+
+export interface TaskProps {
+    task: Task,
+    onDelete: (taskId: number) => void;
+    onEdit: (taskId: number) => void
+    onStatusChange: (taskId: number, status: Status) => void
 }

@@ -1,7 +1,7 @@
 import type { TaskListProps } from "../../types";
 import TaskItem from "./TaskItem";
 
-export default function TaskList({ tasks, onDelete, onEdit }: TaskListProps) {
+export default function TaskList({ tasks, onDelete, onEdit, onStatusChange }: TaskListProps) {
   return (
     <ul>
       {!tasks[0] && <p>No tasks match your search/filter</p>}
@@ -13,6 +13,7 @@ export default function TaskList({ tasks, onDelete, onEdit }: TaskListProps) {
             task={task}
             onDelete={onDelete}
             onEdit={onEdit}
+            onStatusChange={onStatusChange}
           />
         );
       })}
