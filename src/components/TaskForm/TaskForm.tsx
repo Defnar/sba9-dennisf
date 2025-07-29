@@ -10,7 +10,7 @@ export default function TaskForm({
   const idTracker = Number(localStorage.getItem("idTracker")) || 1;
 
   //tracks if category should be a dropdown or text entry
-  let categoryDropdown = true;
+  const [catDropDown, setCatDropDown] = useState<boolean>(true);
 
   //priority array
   const priorities = ["Low", "Medium", "High"];
@@ -65,10 +65,10 @@ export default function TaskForm({
         //the value of category does not change, just the view of the page through boolean
         //if cancelled, it will return to default view and category
         if (value === "Add New Category") {
-          categoryDropdown = false;
+          setCatDropDown(false);
           return;
         }
-        categoryDropdown = true;
+        setCatDropDown(true);
         setTaskInfo((info) => ({ ...info, name: value }));
         return;
       case "new-category":
@@ -84,7 +84,7 @@ export default function TaskForm({
   };
 
   return (
-    <form onSubmit={onDataSubmit}>
+    <form onSubmit={dataSubmitHandler}>
       <label htmlFor="name">Name: </label>
       <input
         type="text"
@@ -94,7 +94,7 @@ export default function TaskForm({
         onChange={handleDataChange}
       />
       {/*If new category is not selected, this is visible*/}
-      {categoryDropdown && (
+      {catDropDown && (
         <div>
           <label htmlFor="category">Category: </label>
           <select
@@ -108,11 +108,11 @@ export default function TaskForm({
         </div>
       )}
       {/*if new category is selected, the dropdown becomes invisible and this is rendered*/}
-      {!categoryDropdown && (
+      {!catDropDown && (
         <div>
           <label htmlFor="new-category">New Category: </label>
           <input type="text" name="new-category" id="new-category" />
-          <button onClick={() => (categoryDropdown = true)}>Cancel</button>
+          <button onClick={() => (setCatDropDown(true))}>Cancel</button>
         </div>
       )}
 
