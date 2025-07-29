@@ -6,54 +6,68 @@ import TaskForm from "../TaskForm/TaskForm";
 export default function Dashboard() {
   //saves the task list
   const [tasks, setTasks] = useState<Task[]>(() => {
-    const taskStorage = localStorage.getItem("tasks");
-
-    return taskStorage ? JSON.parse(taskStorage) : [];
+    try {
+      const taskStorage = localStorage.getItem("tasks");
+      if (!taskStorage) return [];
+      const jsonData: Task[] = JSON.parse(taskStorage);
+      return jsonData.map((task) => ({
+        ...task,
+        dueDate: new Date(task.dueDate),
+      }));
+    } catch {
+      throw new Error("Could not load storage data");
+    }
   });
 
-  //setting up logic for form modal
-  const [formModalOpen, setFormModalOpen] = useState<boolean>(false);
-  const formModalRef = useRef<HTMLDialogElement>(null);
+  //setting up logic for form modal and editing
+  const [isFormModalOpen, setisFormModalOpen] = useState<boolean>(false);
 
+  const [editTask, setEditTask] = useState<Task>();
+  const formModalRef = useRef<HTMLDialogElement>(null);
 
   //checks case of formmodal, and opens the model if needed.  Use effect only runs on react update
   useEffect(() => {
-    switch (formModalOpen) {
+    switch (isFormModalOpen) {
       case true:
         formModalRef?.current?.showModal();
         return;
       case false:
         formModalRef?.current?.close();
     }
-  }, [formModalOpen])
+  }, [isFormModalOpen]);
 
   //delete tasks from list
   const handleDelete = (taskId: number) => {
-    setTasks((taskList) => {
-      const newTaskList = taskList?.filter((task) => task.id != taskId);
-      localStorage.setItem("tasks", JSON.stringify(newTaskList));
-      return newTaskList;
-    });
+    try {
+      setTasks((taskList) => {
+        const newTaskList = taskList?.filter((task) => task.id != taskId);
+        localStorage.setItem("tasks", JSON.stringify(newTaskList));
+        return newTaskList;
+      });
+    } catch {
+      throw new Error("Could not delete task");
+    }
   };
 
   //changes status based on user input
   const handleStatusChange = (taskId: number, status: Status) => {
-    setTasks((taskList) => {
-      const newTaskList = taskList?.map((task) =>
-        task.id === taskId ? { ...task, status: status } : task
-      );
-      localStorage.setItem("tasks", JSON.stringify(newTaskList));
-      return newTaskList;
-    });
+    try {
+      setTasks((taskList) => {
+        const newTaskList = taskList?.map((task) =>
+          task.id === taskId ? { ...task, status: status } : task
+        );
+        localStorage.setItem("tasks", JSON.stringify(newTaskList));
+        return newTaskList;
+      });
+    } catch {
+      throw new Error("Could not change status");
+    }
   };
 
-  //handles edits to the form
+  //handles editing tasks with the form
   const handleEdit = (task: Task) => {
-    <TaskForm
-      task={task}
-      categoryList={createCategoryList()}
-      onDataSubmit={onDataSubmit}
-    />;
+    setEditTask(task);
+    setisFormModalOpen(true);
   };
 
   //this creates an array of unique categories for the form and filter functions
@@ -64,32 +78,37 @@ export default function Dashboard() {
   //2 things happening here.  checks if task has an id in the array already, and appends item
   //or creates a new item if one doesn't exist.
   const onDataSubmit = (newTask: Task) => {
-    if (tasks.some((task) => task.id === newTask.id)) {
-      setTasks((tasks) => {
-        const newTaskList = tasks.map((task) =>
-          task.id === newTask.id ? { ...task, ...newTask } : task
-        );
-        localStorage.setItem("tasks", JSON.stringify(newTaskList));
-        return newTaskList;
-      });
-    } else
-      setTasks((tasks) => {
-        const newTaskList = [newTask, ...tasks];
-        localStorage.setItem("tasks", JSON.stringify(newTaskList));
-        return newTaskList;
-      });
+    try {
+      if (tasks.some((task) => task.id === newTask.id)) {
+        setTasks((tasks) => {
+          const newTaskList = tasks.map((task) =>
+            task.id === newTask.id ? { ...task, ...newTask } : task
+          );
+          localStorage.setItem("tasks", JSON.stringify(newTaskList));
+          return newTaskList;
+        });
+      } else
+        setTasks((tasks) => {
+          const newTaskList = [newTask, ...tasks];
+          localStorage.setItem("tasks", JSON.stringify(newTaskList));
+          return newTaskList;
+        });
+    } catch {
+      throw new Error("Could not save task");
+    }
   };
 
   //return function to display objects in dashboard
   return (
     <>
-      <button type="button" onClick={() => setFormModalOpen(true)}>
+      <button type="button" onClick={() => setisFormModalOpen(true)}>
         Add New Task
       </button>
-      <dialog ref={formModalRef} onClose={() => setFormModalOpen(false)}>
+      <dialog ref={formModalRef} onClose={() => setisFormModalOpen(false)}>
         <TaskForm
           categoryList={createCategoryList()}
           onDataSubmit={onDataSubmit}
+          task={editTask}
         />
       </dialog>
       <TaskList

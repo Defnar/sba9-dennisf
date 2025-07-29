@@ -13,7 +13,7 @@ export default function TaskItem({
   const statusDropdown = () => {
     const status = ["Pending", "In Progress", "Overdue", "Completed"];
     return status.map((stat) => {
-      return <option value={stat}>{stat}</option>;
+      return <option value={stat} key={stat}>{stat}</option>;
     });
   };
 
@@ -36,7 +36,7 @@ export default function TaskItem({
       <div>{task.name}</div>
       <div>{task.category}</div>
       <div>{task.priority}</div>
-      <div>{task.dueDate.toLocaleDateString()}</div>
+      <div>{task.dueDate.toDateString()}</div>
       <div>
         <select value={task.status} onChange={handleChangeStatus}>
           {statusDropdown()}
