@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Status, Task } from "../../types";
 import TaskList from "../TaskList/TaskList";
 import TaskForm from "../TaskForm/TaskForm";
@@ -11,12 +11,28 @@ export default function Dashboard() {
     return taskStorage ? JSON.parse(taskStorage) : [];
   });
 
+  //setting up logic for form modal
+  const [formModalOpen, setFormModalOpen] = useState<boolean>(false);
+  const formModalRef = useRef<HTMLDialogElement>(null);
+
+
+  //checks case of formmodal, and opens the model if needed.  Use effect only runs on react update
+  useEffect(() => {
+    switch (formModalOpen) {
+      case true:
+        formModalRef?.current?.showModal();
+        return;
+      case false:
+        formModalRef?.current?.close();
+    }
+  }, [formModalOpen])
+
   //delete tasks from list
   const handleDelete = (taskId: number) => {
     setTasks((taskList) => {
-      const newTaskList = taskList?.filter((task) => task.id != taskId)
+      const newTaskList = taskList?.filter((task) => task.id != taskId);
       localStorage.setItem("tasks", JSON.stringify(newTaskList));
-      return newTaskList;    
+      return newTaskList;
     });
   };
 
@@ -31,6 +47,7 @@ export default function Dashboard() {
     });
   };
 
+  //handles edits to the form
   const handleEdit = (task: Task) => {
     <TaskForm
       task={task}
@@ -62,12 +79,19 @@ export default function Dashboard() {
         return newTaskList;
       });
   };
+
+  //return function to display objects in dashboard
   return (
     <>
-      <TaskForm
-        categoryList={createCategoryList()}
-        onDataSubmit={onDataSubmit}
-      />
+      <button type="button" onClick={() => setFormModalOpen(true)}>
+        Add New Task
+      </button>
+      <dialog ref={formModalRef} onClose={() => setFormModalOpen(false)}>
+        <TaskForm
+          categoryList={createCategoryList()}
+          onDataSubmit={onDataSubmit}
+        />
+      </dialog>
       <TaskList
         tasks={tasks}
         onDelete={handleDelete}

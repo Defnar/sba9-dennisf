@@ -118,6 +118,7 @@ export default function TaskForm({
         type="text"
         id="name"
         name="name"
+        autoFocus={true}
         minLength={4}
         maxLength={16}
         value={taskInfo.name}
