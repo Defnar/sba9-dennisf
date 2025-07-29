@@ -4,13 +4,11 @@ import TaskList from "../TaskList/TaskList";
 import TaskForm from "../TaskForm/TaskForm";
 
 export default function Dashboard() {
-  const taskStorage = localStorage.getItem("tasks");
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const taskStorage = localStorage.getItem("tasks");
 
-  const taskList = taskStorage
-    ? JSON.parse(taskStorage)
-    : [];
-
-  const [tasks, setTasks] = useState<Task[]>(taskList);
+    return taskStorage ? JSON.parse(taskStorage) : [];
+  });
 
   const handleDelete = (taskId: number) => {
     setTasks((taskList) => taskList?.filter((task) => task.id != taskId));
