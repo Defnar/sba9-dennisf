@@ -1,18 +1,11 @@
 import type React from "react";
-import type { filterObject, TaskFilterProps } from "../../types";
-import { useState } from "react";
+import type { Priority, Status, TaskFilterProps } from "../../types";
 
 export default function TaskFilter({
   categoryList,
   onChange,
+  filters,
 }: TaskFilterProps) {
-  //holds data on filter settings
-  const [displayFilters, setDisplayFilters] = useState<filterObject>({
-    status: "Status",
-    category: "Category",
-    priority: "Priority",
-  });
-
   //creates lists of priority, category, and category, passes them through a switch to develop each one
   const dropDownBuilder = (
     comparator: string
@@ -56,17 +49,45 @@ export default function TaskFilter({
     }
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const name = event.target.name;
+    switch (name) {
+      case "status":
+        console.log("changing status to ", event.target.value)
+        return onChange({ status: event.target.value as Status });
+      case "category":
+        return onChange({ category: event.target.value });
+      case "priority":
+        return onChange({ priority: event.target.value as Priority });
+    }
+  };
+
   return (
     <div>
       <h2>Filter By: </h2>
       <div>
-        <select aria-label="status filter" value={displayFilters.status}>
+        <select
+          aria-label="status filter"
+          name="status"
+          value={filters.status}
+          onChange={handleChange}
+        >
           {dropDownBuilder("Status")}
         </select>
-        <select aria-label="category filter" value={displayFilters.category}>
+        <select
+          aria-label="category filter"
+          name="category"
+          value={filters.category}
+          onChange={handleChange}
+        >
           {dropDownBuilder("Category")}
         </select>
-        <select aria-label="priority filter" value={displayFilters.priority}>
+        <select
+          aria-label="priority filter"
+          name="priority"
+          value={filters.priority}
+          onChange={handleChange}
+        >
           {dropDownBuilder("Priority")}
         </select>
       </div>

@@ -1,5 +1,12 @@
-export type Status = "All" | "Pending" | "In Progress" | "Overdue" | "Completed";
+export type filterKeys = "Status" | "Property" | "Priority";
+export type Status =
+  | "All"
+  | "Pending"
+  | "In Progress"
+  | "Overdue"
+  | "Completed";
 export type Priority = "All" | "Low" | "Medium" | "High";
+export type partialFilter = Partial<filterObject>;
 
 export interface Task {
   id: number;
@@ -32,11 +39,12 @@ export interface TaskProps {
 
 export interface TaskFilterProps {
   categoryList: string[];
-  onChange: () => void;
+  onChange: (arg0: partialFilter) => void;
+  filters: filterObject;
 }
 
 export interface filterObject {
-  status: string;
-  category: string,
-  priority: string
+  status: Status;
+  category: string;
+  priority: Priority;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { Status, Task } from "../../types";
+import type { filterObject, partialFilter, Status, Task } from "../../types";
 import TaskList from "../TaskList/TaskList";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskFilter from "../TaskFilter/TaskFilter";
@@ -19,6 +19,18 @@ export default function Dashboard() {
       throw new Error("Could not load storage data");
     }
   });
+
+  //filter list
+  const [filters, setFilters] = useState<filterObject>({
+    status: "All",
+    category: "All",
+    priority: "All",
+  });
+
+  const changeFilters = (newFilter: partialFilter) => {
+    setFilters(filter => ({...filter, ...newFilter}))
+    console.log(newFilter);
+  }
 
   //setting up logic for form modal and editing
   const [isFormModalOpen, setisFormModalOpen] = useState<boolean>(false);
@@ -112,7 +124,7 @@ export default function Dashboard() {
           task={editTask}
         />
       </dialog>
-      <TaskFilter />
+      <TaskFilter onChange={changeFilters} categoryList={createCategoryList()} filters={filters}/>
       <TaskList
         tasks={tasks}
         onDelete={handleDelete}
