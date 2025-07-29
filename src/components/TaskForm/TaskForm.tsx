@@ -29,6 +29,18 @@ export default function TaskForm({
     }
   );
 
+  //resets the form
+  const resetForm = () => {
+    setTaskInfo({
+      name: "",
+      id: idTracker,
+      category: "",
+      dueDate: new Date(),
+      status: "Pending",
+      priority: "Low",
+    });
+  };
+
   //constructs list with 'select a category at top" and "add New Category" at bottom
   //select a category is hidden but should be default in new item creation.
   //version 2
@@ -92,7 +104,6 @@ export default function TaskForm({
 
   const dataSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(event);
     if (taskInfo.name.length < 4 || taskInfo.name.length > 16) {
       alert("Task name should be between 4 and 16 characters long");
       return;
@@ -109,6 +120,7 @@ export default function TaskForm({
       localStorage.setItem("idTracker", newId.toString());
       return newId;
     });
+    resetForm();
   };
 
   return (
