@@ -34,3 +34,9 @@ export interface TaskFilterProps {
   categoryList: string[];
   onChange: () => void;
 }
+
+export interface filterObject {
+  status: string;
+  category: string,
+  priority: string
+}
