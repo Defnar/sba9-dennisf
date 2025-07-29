@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Priority, Task, TaskFormProps } from "../../types";
 
 export default function TaskForm({
@@ -37,6 +37,11 @@ export default function TaskForm({
       priority: "Low",
     });
   };
+
+  //sets the data to the form for edit
+  useEffect(() => {
+    if (task) setTaskInfo(task);
+  }, [task]);
 
   //constructs list with 'select a category at top" and "add New Category" at bottom
   //select a category is hidden but should be default in new item creation.
