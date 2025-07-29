@@ -109,6 +109,8 @@ export default function TaskForm({
   //sends data to dashboard if it passes validation
   const dataSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    //check validation of input fields
     if (taskInfo.name.length < 4 || taskInfo.name.length > 16) {
       alert("Task name should be between 4 and 16 characters long");
       return;
@@ -119,6 +121,8 @@ export default function TaskForm({
       );
       return;
     }
+    try {
+    //validation passed, pushing information to dashboard, moving to next id, saving to local storage
     onDataSubmit(taskInfo);
     setIdTracker((id) => {
       const newId = id + 1;
@@ -126,6 +130,10 @@ export default function TaskForm({
       return newId;
     });
     resetForm();
+  }
+  catch {
+    throw new Error("Failed to add or update task")
+  }
   };
 
   return (
