@@ -13,7 +13,11 @@ export default function Dashboard() {
 
   //delete tasks from list
   const handleDelete = (taskId: number) => {
-    setTasks((taskList) => taskList?.filter((task) => task.id != taskId));
+    setTasks((taskList) => {
+      const newTaskList = taskList?.filter((task) => task.id != taskId)
+      localStorage.setItem("tasks", JSON.stringify(newTaskList));
+      return newTaskList;    
+    });
   };
 
   //changes status based on user input
