@@ -7,11 +7,13 @@ export default function TaskForm({
   categoryList,
 }: TaskFormProps) {
   //pulls new tracker, or in the case of no stored id, starts at 1
-  const idTracker = Number(localStorage.getItem("idTracker")) || 1;
 
   //priority array
   const priorities = ["Low", "Medium", "High"];
 
+  const [idTracker, setIdTracker] = useState<number>(
+    Number(localStorage.getItem("idTracker")) || 1
+  );
   //tracks if category should be a dropdown or text entry
   const [catDropDown, setCatDropDown] = useState<boolean>(true);
 
@@ -74,7 +76,7 @@ export default function TaskForm({
           return;
         }
         setCatDropDown(true);
-        setTaskInfo((info) => ({ ...info, name: value }));
+        setTaskInfo((info) => ({ ...info, category: value }));
         return;
       case "new-category":
         setTaskInfo((info) => ({ ...info, category: value }));
@@ -91,6 +93,22 @@ export default function TaskForm({
   const dataSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(event);
+    if (taskInfo.name.length < 4 || taskInfo.name.length > 16) {
+      alert("Task name should be between 4 and 16 characters long");
+      return;
+    }
+    if (taskInfo.category.length < 4 || taskInfo.category.length > 12) {
+      alert(
+        "category should be a valid category between 4 and 12 characters long"
+      );
+      return;
+    }
+    onDataSubmit(taskInfo);
+    setIdTracker((id) => {
+      const newId = id + 1;
+      localStorage.setItem("idTracker", newId.toString());
+      return newId;
+    });
   };
 
   return (
@@ -102,7 +120,7 @@ export default function TaskForm({
         name="name"
         minLength={4}
         maxLength={16}
-        value={task?.name}
+        value={taskInfo.name}
         onChange={handleDataChange}
       />
       {/*If new category is not selected, this is visible*/}
@@ -113,7 +131,7 @@ export default function TaskForm({
             id="category"
             name="category"
             onChange={handleDataChange}
-            value={task?.category ? task.category : "Select A Category"}
+            value={taskInfo.category ? taskInfo.category : "Select A Category"}
           >
             {constructCategoryList()}
           </select>
@@ -127,6 +145,8 @@ export default function TaskForm({
             type="text"
             name="new-category"
             id="new-category"
+            value={taskInfo.category}
+            onChange={handleDataChange}
             minLength={4}
             maxLength={12}
           />
@@ -135,10 +155,15 @@ export default function TaskForm({
       )}
 
       <label htmlFor="due-date">Due By: </label>
-      <input type="datetime-local" name="due-date" id="due-date" />
+      <input type="date" name="due-date" id="due-date" />
 
       <label htmlFor="priority">Priority: </label>
-      <select value={task?.priority ? task.priority : "Low"} onChange={handleDataChange}>
+      <select
+        value={taskInfo.priority}
+        name="priority"
+        id="priority"
+        onChange={handleDataChange}
+      >
         {constructPriorityList()}
       </select>
       <button type="submit">Submit</button>
