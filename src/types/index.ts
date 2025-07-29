@@ -13,19 +13,19 @@ export interface Task {
 export interface TaskListProps {
   tasks: Task[];
   onDelete: (taskId: number) => void;
-  onEdit: (taskId: number) => void;
+  onEdit: (task: Task) => void;
   onStatusChange: (taskId: number, status: Status) => void;
 }
 
 export interface TaskFormProps {
   task?: Task;
   categoryList: string[];
-  onDataSubmit: () => void;
+  onDataSubmit: (newTask: Task) => void;
 }
 
 export interface TaskProps {
   task: Task;
   onDelete: (taskId: number) => void;
-  onEdit: (taskId: number) => void;
+  onEdit: (task: Task) => void;
   onStatusChange: (taskId: number, status: Status) => void;
 }

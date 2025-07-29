@@ -1,4 +1,4 @@
-import type { Status, TaskProps } from "../../types";
+import type { Status, Task, TaskProps } from "../../types";
 
 export default function TaskItem({
   task,
@@ -22,8 +22,8 @@ export default function TaskItem({
     onDelete(taskId);
   };
 
-  const handleEdit = (taskId: number) => {
-    onEdit(taskId);
+  const handleEdit = (task: Task) => {
+    onEdit(task);
   };
 
   //callback function for handling status
@@ -42,7 +42,7 @@ export default function TaskItem({
           {statusDropdown()}
         </select>
       </div>
-      <button onClick={() => handleEdit(task.id)}>Edit</button>
+      <button onClick={() => handleEdit(task)}>Edit</button>
       <button onClick={() => handleDelete(task.id)}>Del</button>
     </li>
   );

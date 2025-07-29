@@ -24,10 +24,15 @@ export default function Dashboard() {
     });
   };
 
+  const handleEdit = (task: Task) => {
+    <TaskForm task={task} categoryList={createCategoryList()} onDataSubmit={onDataSubmit} />
+  }
+
   //this creates an array of unique categories for the form and filter functions
   const createCategoryList = () => {
     return Array.from(new Set(tasks.map((task) => task.category)));
   };
+
 
 
   //2 things happening here.  checks if task has an id in the array already, and appends item
@@ -43,7 +48,6 @@ export default function Dashboard() {
   };
   return (
     <>
-      <TaskFilter />
       <TaskForm categoryList={createCategoryList()} onDataSubmit={onDataSubmit} />
       <TaskList
         tasks={tasks}

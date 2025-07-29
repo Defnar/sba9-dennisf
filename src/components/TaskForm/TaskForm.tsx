@@ -9,11 +9,11 @@ export default function TaskForm({
   //pulls new tracker, or in the case of no stored id, starts at 1
   const idTracker = Number(localStorage.getItem("idTracker")) || 1;
 
-  //tracks if category should be a dropdown or text entry
-  const [catDropDown, setCatDropDown] = useState<boolean>(true);
-
   //priority array
   const priorities = ["Low", "Medium", "High"];
+
+  //tracks if category should be a dropdown or text entry
+  const [catDropDown, setCatDropDown] = useState<boolean>(true);
 
   //stores task info as it's written, or current task information
   const [taskInfo, setTaskInfo] = useState<Task>(
@@ -28,27 +28,32 @@ export default function TaskForm({
   );
 
   //constructs list with 'select a category at top" and "add New Category" at bottom
-  //select a category is hidden but should be default.
+  //select a category is hidden but should be default in new item creation.
+  //version 2
   const constructCategoryList = () => {
-    categoryList.unshift("Select A Category");
-    categoryList.push("Add New Category");
-    return categoryList.map((cat) => {
+    const catList = ["Select A Category", ...categoryList, "Add New Category"];
+    return catList.map((cat) => {
       return cat === "Select A Category" ? (
-        <option value={cat} hidden>
+        <option value={cat} hidden key={cat}>
           {cat}
         </option>
       ) : (
-        <option value={cat}>{cat}</option>
+        <option value={cat} key={cat}>
+          {cat}
+        </option>
       );
     });
   };
 
   const constructPriorityList = () => {
     return priorities.map((priority) => {
-      return <option value={priority}>{priority}</option>;
+      return (
+        <option value={priority} key={priority}>
+          {priority}
+        </option>
+      );
     });
   };
-
 
   //handles data as it changes on the form
   const handleDataChange = (
@@ -83,6 +88,11 @@ export default function TaskForm({
     }
   };
 
+  const dataSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(event);
+  };
+
   return (
     <form onSubmit={dataSubmitHandler}>
       <label htmlFor="name">Name: </label>
@@ -90,6 +100,8 @@ export default function TaskForm({
         type="text"
         id="name"
         name="name"
+        minLength={4}
+        maxLength={16}
         value={task?.name}
         onChange={handleDataChange}
       />
@@ -111,8 +123,14 @@ export default function TaskForm({
       {!catDropDown && (
         <div>
           <label htmlFor="new-category">New Category: </label>
-          <input type="text" name="new-category" id="new-category" />
-          <button onClick={() => (setCatDropDown(true))}>Cancel</button>
+          <input
+            type="text"
+            name="new-category"
+            id="new-category"
+            minLength={4}
+            maxLength={12}
+          />
+          <button onClick={() => setCatDropDown(true)}>Cancel</button>
         </div>
       )}
 
@@ -120,9 +138,10 @@ export default function TaskForm({
       <input type="datetime-local" name="due-date" id="due-date" />
 
       <label htmlFor="priority">Priority: </label>
-      <select value={task?.priority ? task.priority : "Low"}>
-        {constructPriorityList()}{" "}
+      <select value={task?.priority ? task.priority : "Low"} onChange={handleDataChange}>
+        {constructPriorityList()}
       </select>
+      <button type="submit">Submit</button>
     </form>
   );
 }
