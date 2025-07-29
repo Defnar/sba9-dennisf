@@ -1,5 +1,5 @@
-export type Status = "Pending" | "In Progress" | "Overdue" | "Completed";
-export type Priority = "Low" | "Medium" | "High";
+export type Status = "All" | "Pending" | "In Progress" | "Overdue" | "Completed";
+export type Priority = "All" | "Low" | "Medium" | "High";
 
 export interface Task {
   id: number;
@@ -28,4 +28,9 @@ export interface TaskProps {
   onDelete: (taskId: number) => void;
   onEdit: (task: Task) => void;
   onStatusChange: (taskId: number, status: Status) => void;
+}
+
+export interface TaskFilterProps {
+  categoryList: string[];
+  onChange: () => void;
 }

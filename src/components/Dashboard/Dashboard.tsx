@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Status, Task } from "../../types";
 import TaskList from "../TaskList/TaskList";
 import TaskForm from "../TaskForm/TaskForm";
+import TaskFilter from "../TaskFilter/TaskFilter";
 
 export default function Dashboard() {
   //saves the task list
@@ -111,6 +112,7 @@ export default function Dashboard() {
           task={editTask}
         />
       </dialog>
+      <TaskFilter />
       <TaskList
         tasks={tasks}
         onDelete={handleDelete}
