@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Status, Task } from "../../types";
 import TaskList from "../TaskList/TaskList";
+import TaskForm from "../TaskForm/TaskForm";
 
 export default function Dashboard() {
   const taskStorage = localStorage.getItem("tasks");
