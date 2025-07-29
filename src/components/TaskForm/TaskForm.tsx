@@ -8,9 +8,6 @@ export default function TaskForm({
 }: TaskFormProps) {
   //pulls new tracker, or in the case of no stored id, starts at 1
 
-  //priority array
-  const priorities = ["Low", "Medium", "High"];
-
   const [idTracker, setIdTracker] = useState<number>(
     Number(localStorage.getItem("idTracker")) || 1
   );
@@ -59,7 +56,9 @@ export default function TaskForm({
     });
   };
 
+  //construct priority list
   const constructPriorityList = () => {
+    const priorities = ["Low", "Medium", "High"];
     return priorities.map((priority) => {
       return (
         <option value={priority} key={priority}>
@@ -102,6 +101,7 @@ export default function TaskForm({
     }
   };
 
+  //sends data to dashboard if it passes validation
   const dataSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (taskInfo.name.length < 4 || taskInfo.name.length > 16) {

@@ -7,11 +7,11 @@ export default function TaskItem({
   onStatusChange,
 }: TaskProps) {
   //status list to create dropdown box
-  const status= ["Pending", "In Progress", "Overdue", "Completed"];
 
   //create dropdown list for statuses
 
   const statusDropdown = () => {
+    const status = ["Pending", "In Progress", "Overdue", "Completed"];
     return status.map((stat) => {
       return <option value={stat}>{stat}</option>;
     });
