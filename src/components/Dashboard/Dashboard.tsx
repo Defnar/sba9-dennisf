@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import type { filterObject, partialFilter, Status, Task } from "../../types";
+import type {
+  filterObject,
+  partialFilter,
+  Status,
+  StorageTask,
+  Task,
+} from "../../types";
 import TaskList from "../TaskList/TaskList";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskFilter from "../TaskFilter/TaskFilter";
+import { JsonToTask } from "../../utils/taskUtils";
 
 export default function Dashboard() {
   //saves the task list
@@ -10,11 +17,8 @@ export default function Dashboard() {
     try {
       const taskStorage = localStorage.getItem("tasks");
       if (!taskStorage) return [];
-      const jsonData: Task[] = JSON.parse(taskStorage);
-      return jsonData.map((task) => ({
-        ...task,
-        dueDate: new Date(task.dueDate),
-      }));
+      const jsonData: StorageTask[] = JSON.parse(taskStorage);
+      return JsonToTask(jsonData);
     } catch {
       throw new Error("Could not load storage data");
     }
@@ -28,9 +32,9 @@ export default function Dashboard() {
   });
 
   const changeFilters = (newFilter: partialFilter) => {
-    setFilters(filter => ({...filter, ...newFilter}))
+    setFilters((filter) => ({ ...filter, ...newFilter }));
     console.log(newFilter);
-  }
+  };
 
   //setting up logic for form modal and editing
   const [isFormModalOpen, setisFormModalOpen] = useState<boolean>(false);
@@ -111,14 +115,6 @@ export default function Dashboard() {
     }
   };
 
-  //returns a filtered list that's passed onto tasklist
-  const filterItems = ():Task[] => {
-    return tasks.filter((task) => {
-      return (filters.status === "All" || task.status === filters.status) &&
-      (filters.category === "All" || task.category === filters.category) &&
-      (filters.priority === "All" || task.priority === filters.priority)
-    })
-  }
   //return function to display objects in dashboard
   return (
     <>
@@ -132,9 +128,14 @@ export default function Dashboard() {
           task={editTask}
         />
       </dialog>
-      <TaskFilter onChange={changeFilters} categoryList={createCategoryList()} filters={filters}/>
+      <TaskFilter
+        onChange={changeFilters}
+        categoryList={createCategoryList()}
+        filters={filters}
+      />
       <TaskList
-        tasks={filterItems()}
+        filters={filters}
+        tasks={tasks}
         onDelete={handleDelete}
         onEdit={handleEdit}
         onStatusChange={handleStatusChange}

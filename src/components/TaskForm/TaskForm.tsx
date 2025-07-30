@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Priority, Task, TaskFormProps } from "../../types";
+import { validateStringLength } from "../../utils/taskUtils";
+import { formLimits } from "./FormConfig";
 
 export default function TaskForm({
   task,
@@ -7,10 +9,10 @@ export default function TaskForm({
   categoryList,
 }: TaskFormProps) {
   //pulls new tracker, or in the case of no stored id, starts at 1
-
   const [idTracker, setIdTracker] = useState<number>(
     Number(localStorage.getItem("idTracker")) || 1
   );
+
   //tracks if category should be a dropdown or text entry
   const [catDropDown, setCatDropDown] = useState<boolean>(true);
 
@@ -109,31 +111,28 @@ export default function TaskForm({
   //sends data to dashboard if it passes validation
   const dataSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    const nameMin = formLimits.taskName.minLength;
+    const nameMax = formLimits.taskName.maxlength;
+    const catMin = formLimits.taskCategory.minLength;
+    const catMax = formLimits.taskCategory.maxLength;
     //check validation of input fields
-    if (taskInfo.name.length < 4 || taskInfo.name.length > 16) {
-      alert("Task name should be between 4 and 16 characters long");
+    if (
+      !validateStringLength("Task name", taskInfo.name, nameMin, nameMax) &&
+      !validateStringLength("category", taskInfo.category, catMin, catMax)
+    )
       return;
-    }
-    if (taskInfo.category.length < 4 || taskInfo.category.length > 12) {
-      alert(
-        "category should be a valid category between 4 and 12 characters long"
-      );
-      return;
-    }
     try {
-    //validation passed, pushing information to dashboard, moving to next id, saving to local storage
-    onDataSubmit(taskInfo);
-    setIdTracker((id) => {
-      const newId = id + 1;
-      localStorage.setItem("idTracker", newId.toString());
-      return newId;
-    });
-    resetForm();
-  }
-  catch {
-    throw new Error("Failed to add or update task")
-  }
+      //validation passed, pushing information to dashboard, moving to next id, saving to local storage
+      onDataSubmit(taskInfo);
+      setIdTracker((id) => {
+        const newId = id + 1;
+        localStorage.setItem("idTracker", newId.toString());
+        return newId;
+      });
+      resetForm();
+    } catch {
+      throw new Error("Failed to add or update task");
+    }
   };
 
   return (
@@ -144,8 +143,8 @@ export default function TaskForm({
         id="name"
         name="name"
         autoFocus={true}
-        minLength={4}
-        maxLength={16}
+        minLength={formLimits.taskName.minLength}
+        maxLength={formLimits.taskName.maxlength}
         value={taskInfo.name}
         onChange={handleDataChange}
       />
@@ -173,8 +172,8 @@ export default function TaskForm({
             id="new-category"
             value={taskInfo.category}
             onChange={handleDataChange}
-            minLength={4}
-            maxLength={12}
+            minLength={formLimits.taskCategory.minLength}
+            maxLength={formLimits.taskCategory.maxLength}
           />
           <button onClick={() => setCatDropDown(true)}>Cancel</button>
         </div>

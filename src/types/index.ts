@@ -17,8 +17,18 @@ export interface Task {
   priority: Priority;
 }
 
+export interface StorageTask {
+  id: string;
+  name: string;
+  category: string;
+  dueDate: string;
+  status: Status;
+  priority: Priority;
+}
+
 export interface TaskListProps {
   tasks: Task[];
+  filters: filterObject;
   onDelete: (taskId: number) => void;
   onEdit: (task: Task) => void;
   onStatusChange: (taskId: number, status: Status) => void;
