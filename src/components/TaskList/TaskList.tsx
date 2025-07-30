@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { sortParameters, Task, TaskListProps } from "../../types";
+import type { Order, sortCategory, sortParameters, Task, TaskListProps } from "../../types";
 import { filterItems, searchTasks, sortTasks } from "../../utils/taskUtils";
 import TaskItem from "./TaskItem";
 
@@ -22,16 +22,40 @@ export default function TaskList({
     return sortTasks(searchList, sort.category, sort.order);
   };
 
+  const handleSort = (sortCategory: sortCategory) => {
+    let newOrder: Order;
+    if (sortCategory===sort.category) {
+    switch (sort.order) {
+      case "None":
+        newOrder = "Asc"
+        break;
+      case "Asc":
+        newOrder = "Desc"
+        break;
+      default:
+        newOrder = "None"
+    }
+  }
+  else {
+    newOrder = "Asc"
+  }
+  setSort({
+    category: sortCategory,
+    order: newOrder
+  })
+
+  }
+
   return (
     <>
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Priority</th>
-            <th>Due Date</th>
-            <th>Status</th>
+            <th onClick={() => handleSort("name")}>Name</th>
+            <th onClick={() => handleSort("category")}>Category</th>
+            <th onClick={() => handleSort("priority")}>Priority</th>
+            <th onClick={() => handleSort("dueDate")}>Due Date</th>
+            <th onClick={() => handleSort("status")}>Status</th>
             <th>Edit</th>
             <th>Del</th>
           </tr>
