@@ -53,7 +53,7 @@ export default function TaskFilter({
     const name = event.target.name;
     switch (name) {
       case "status":
-        console.log("changing status to ", event.target.value)
+        
         return onChange({ status: event.target.value as Status });
       case "category":
         return onChange({ category: event.target.value });

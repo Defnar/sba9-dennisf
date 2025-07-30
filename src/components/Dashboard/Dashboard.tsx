@@ -111,6 +111,13 @@ export default function Dashboard() {
     }
   };
 
+  const filterItems = ():Task[] => {
+    return tasks.filter((task) => {
+      return (filters.status === "All" || task.status === filters.status) &&
+      (filters.category === "All" || task.category === filters.category) &&
+      (filters.priority === "All" || task.priority === filters.priority)
+    })
+  }
   //return function to display objects in dashboard
   return (
     <>
@@ -126,7 +133,7 @@ export default function Dashboard() {
       </dialog>
       <TaskFilter onChange={changeFilters} categoryList={createCategoryList()} filters={filters}/>
       <TaskList
-        tasks={tasks}
+        tasks={filterItems()}
         onDelete={handleDelete}
         onEdit={handleEdit}
         onStatusChange={handleStatusChange}
