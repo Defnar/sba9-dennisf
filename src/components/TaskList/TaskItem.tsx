@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import type { Priority, Status, Task, TaskProps } from "../../types";
-import { dateToString } from "../../utils/taskUtils";
+import { checkIfOverdue, dateToString } from "../../utils/taskUtils";
 
 export default function TaskItem({
   task,
@@ -10,9 +11,9 @@ export default function TaskItem({
   //status list to create dropdown box
 
   //create dropdown list for statuses
-
   const statusDropdown = () => {
     const status = ["Pending", "In Progress", "Overdue", "Completed"];
+
     return status.map((stat) => {
       return (
         <option value={stat} key={stat}>
@@ -35,6 +36,28 @@ export default function TaskItem({
     }
   };
 
+  const checkOverdue = () => {
+    if (task.status != "Completed") {
+      if (checkIfOverdue(task.dueDate)) onStatusChange(task.id, "Overdue");
+    }
+  };
+
+  //use effect and set interval are cool.  I hope we learn more about these in class
+  //I think it'll be helpful so I don't overload the browser with checking the conditional
+  //like I just did.  quick fix from vscode for removing line
+  //these check overdue on a timer, and on editing the due date for the task
+  useEffect(() => {
+    const interval = setInterval(() => checkOverdue(), 30000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task, onStatusChange]);
+
+  useEffect(
+    () =>
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      checkOverdue(),
+    [task.dueDate]
+  );
   //passes task id into callback functions for changing status, handling
   const handleDelete = (taskId: number) => {
     onDelete(taskId);

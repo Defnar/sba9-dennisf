@@ -23,6 +23,13 @@ export function dateToString(date: Date): string {
   return date.toDateString();
 }
 
+
+//returns formatted string for use by form
+export function dateToFormString(date: Date): string {
+  return date.toISOString().split("T")[0];
+}
+
+
 export function JsonToDate(date: string | Date): Date {
   return new Date(date);
 }
@@ -84,6 +91,6 @@ export function sortTasks(tasks: Task[], sortCategory: sortCategory, sortOrder: 
 }
 
 export function checkIfOverdue(date: Date): boolean {
-  if (date > new Date()) return true;
+  if (date < new Date()) return true;
   return false;
 }

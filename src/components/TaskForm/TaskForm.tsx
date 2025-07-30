@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Priority, Task, TaskFormProps } from "../../types";
-import { validateStringLength } from "../../utils/taskUtils";
+import { dateToFormString, validateStringLength } from "../../utils/taskUtils";
 import { formLimits } from "./FormConfig";
 
 export default function TaskForm({
@@ -195,7 +195,8 @@ export default function TaskForm({
       )}
 
       <label htmlFor="due-date">Due By: </label>
-      <input type="date" name="due-date" id="due-date" />
+      <input type="date" name="due-date" id="due-date" value={dateToFormString(taskInfo.dueDate)}
+      onChange={handleDataChange} />
 
       <label htmlFor="priority">Priority: </label>
       <select
