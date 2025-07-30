@@ -111,6 +111,7 @@ export default function Dashboard() {
     }
   };
 
+  //returns a filtered list that's passed onto tasklist
   const filterItems = ():Task[] => {
     return tasks.filter((task) => {
       return (filters.status === "All" || task.status === filters.status) &&
