@@ -74,6 +74,7 @@ export default function Dashboard() {
   //sets search data to search
   const handleSearch = (inputSearch: string) => {
     setSearch(inputSearch);
+    console.log("searching: " + search)
   }
 
   //changes status based on user input
@@ -120,7 +121,8 @@ export default function Dashboard() {
           localStorage.setItem("tasks", JSON.stringify(newTaskList));
           return newTaskList;
         });
-    } catch {
+    } catch (error){
+      console.error(error);
       throw new Error("Could not save task");
     }
   };
@@ -148,6 +150,7 @@ export default function Dashboard() {
       <TaskList
         filters={filters}
         tasks={tasks}
+        search={search}
         onDelete={handleDelete}
         onEdit={handleEdit}
         onStatusChange={handleStatusChange}

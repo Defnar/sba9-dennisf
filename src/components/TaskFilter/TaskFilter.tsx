@@ -65,7 +65,7 @@ export default function TaskFilter({
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputSearch = event.target.value.trim();
+    const inputSearch = event.target.value;
     onSearch(inputSearch);
   };
 

@@ -84,7 +84,7 @@ export default function TaskForm({
     const value = event.target.value;
     switch (event.target.name) {
       case "name":
-        setTaskInfo((info) => ({ ...info, name: value.trim() }));
+        setTaskInfo((info) => ({ ...info, name: value }));
         return;
       case "category":
         //the value of category does not change, just the view of the page through boolean
@@ -97,7 +97,7 @@ export default function TaskForm({
         setTaskInfo((info) => ({ ...info, category: value }));
         return;
       case "new-category":
-        setTaskInfo((info) => ({ ...info, category: value.trim() }));
+        setTaskInfo((info) => ({ ...info, category: value }));
         return;
       case "due-date":
         setTaskInfo((info) => ({ ...info, dueDate: new Date(value) }));
@@ -115,22 +115,27 @@ export default function TaskForm({
     const nameMax = formLimits.taskName.maxlength;
     const catMin = formLimits.taskCategory.minLength;
     const catMax = formLimits.taskCategory.maxLength;
+    const taskName = taskInfo.name.trim();
+    const taskCat = taskInfo.category.trim();
     //check validation of input fields
     if (
-      !validateStringLength("Task name", taskInfo.name, nameMin, nameMax) &&
-      !validateStringLength("category", taskInfo.category, catMin, catMax)
+      !validateStringLength("Task name", taskName, nameMin, nameMax) &&
+      !validateStringLength("category", taskCat, catMin, catMax)
     )
       return;
     try {
       //validation passed, pushing information to dashboard, moving to next id, saving to local storage
-      onDataSubmit(taskInfo);
+      //trim data before
+      console.log("submitting data");
+      onDataSubmit({ ...taskInfo, name: taskName, category: taskCat });
       setIdTracker((id) => {
         const newId = id + 1;
         localStorage.setItem("idTracker", newId.toString());
         return newId;
       });
       resetForm();
-    } catch {
+    } catch (error) {
+      console.log(error);
       throw new Error("Failed to add or update task");
     }
   };

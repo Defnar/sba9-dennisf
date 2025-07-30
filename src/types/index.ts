@@ -29,6 +29,7 @@ export interface StorageTask {
 export interface TaskListProps {
   tasks: Task[];
   filters: filterObject;
+  search: string;
   onDelete: (taskId: number) => void;
   onEdit: (task: Task) => void;
   onStatusChange: (taskId: number, status: Status) => void;

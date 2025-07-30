@@ -10,10 +10,13 @@ export function filterItems(filters: filterObject, tasks: Task[]): Task[] {
   });
 }
 
-export function searchItems(tasks: Task[], search: string): Task[] {
+export function searchTasks(tasks: Task[], search: string): Task[] {
+  if (search) {
     return tasks.filter((task) => {
-        task.name.includes(search.trim());
-    })
+      return task.name.includes(search.trim());
+    });
+  }
+  return tasks;
 }
 
 export function dateToString(date: Date): string {
@@ -34,8 +37,17 @@ export function JsonToTask(tasks: StorageTask[]): Task[] {
   });
 }
 
-export function validateStringLength(inputField: string, inputString: string, minLength: number, maxLength: number) {
-    if (inputString.length < minLength || inputString.length > maxLength) 
-        alert(`${inputField} should be between ${minLength} and ${maxLength} characters long`)
-        return false;
+export function validateStringLength(
+  inputField: string,
+  inputString: string,
+  minLength: number,
+  maxLength: number
+):boolean {
+  if (inputString.length < minLength || inputString.length > maxLength) {
+    alert(
+      `${inputField} should be between ${minLength} and ${maxLength} characters long`
+    );
+    return false;
+  }
+  return true;
 }
