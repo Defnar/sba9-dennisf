@@ -84,7 +84,7 @@ export default function TaskForm({
     const value = event.target.value;
     switch (event.target.name) {
       case "name":
-        setTaskInfo((info) => ({ ...info, name: value }));
+        setTaskInfo((info) => ({ ...info, name: value.trim() }));
         return;
       case "category":
         //the value of category does not change, just the view of the page through boolean
@@ -97,7 +97,7 @@ export default function TaskForm({
         setTaskInfo((info) => ({ ...info, category: value }));
         return;
       case "new-category":
-        setTaskInfo((info) => ({ ...info, category: value }));
+        setTaskInfo((info) => ({ ...info, category: value.trim() }));
         return;
       case "due-date":
         setTaskInfo((info) => ({ ...info, dueDate: new Date(value) }));
