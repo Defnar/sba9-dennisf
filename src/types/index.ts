@@ -62,3 +62,11 @@ export interface filterObject {
   category: string;
   priority: Priority;
 }
+
+export type sortCategory = "name" | "category" | "priority" | "dueDate" | "status"
+
+export interface sortParameters{
+  category: sortCategory;
+  order: "Asc" | "Desc" | "None"
+}
+

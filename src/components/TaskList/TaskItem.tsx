@@ -37,18 +37,22 @@ export default function TaskItem({
   };
 
   return (
-    <li>
-      <div>{task.name}</div>
-      <div>{task.category}</div>
-      <div>{task.priority}</div>
-      <div>{dateToString(task.dueDate)}</div>
-      <div>
+    <tr>
+      <td>{task.name}</td>
+      <td>{task.category}</td>
+      <td>{task.priority}</td>
+      <td>{dateToString(task.dueDate)}</td>
+      <td>
         <select value={task.status} onChange={handleChangeStatus}>
           {statusDropdown()}
         </select>
-      </div>
-      <button onClick={() => handleEdit(task)}>Edit</button>
-      <button onClick={() => handleDelete(task.id)}>Del</button>
-    </li>
+      </td>
+      <td>
+        <button onClick={() => handleEdit(task)}>Edit</button>
+      </td>
+      <td>
+        <button onClick={() => handleDelete(task.id)}>Del</button>
+      </td>
+    </tr>
   );
 }

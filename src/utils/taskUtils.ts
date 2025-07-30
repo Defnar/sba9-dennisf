@@ -1,4 +1,4 @@
-import type { filterObject, StorageTask, Task } from "../types";
+import type { filterObject, sortCategory, StorageTask, Task } from "../types";
 
 export function filterItems(filters: filterObject, tasks: Task[]): Task[] {
   return tasks.filter((task) => {
@@ -50,4 +50,35 @@ export function validateStringLength(
     return false;
   }
   return true;
+}
+
+export function sortTasks(tasks: Task[], sortCategory: sortCategory, sortOrder: "Asc" | "Desc" | "None"):Task[] {
+  if (sortOrder === "None") return tasks;
+  let sortedArray = [...tasks];
+  switch (sortCategory) {
+    case "name":
+      sortedArray.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+      break;
+    case "category":
+      sortedArray.sort((a, b) => a.category.toLowerCase().localeCompare(b.category.toLowerCase()))
+      break;
+    case "dueDate":
+      sortedArray.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
+      break;
+    case "priority":
+      sortedArray = [...sortedArray.filter(task => task.priority==="High"),
+        ...sortedArray.filter(task=> task.priority==="Medium"),
+        ...sortedArray.filter(task => task.priority==="Low")
+      ]
+      break;
+    case "status":
+      sortedArray = [...sortedArray.filter(task => task.status==="Overdue"),
+        ...sortedArray.filter(task => task.status==="In Progress"),
+        ...sortedArray.filter(task => task.status==="Pending"),
+        ...sortedArray.filter(task => task.status==="Completed")
+      ]
+  }
+
+  return (sortOrder==="Asc")? sortedArray : sortedArray.reverse();
+
 }
