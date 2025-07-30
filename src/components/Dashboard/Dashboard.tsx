@@ -31,14 +31,19 @@ export default function Dashboard() {
     priority: "All",
   });
 
+  //updates filter everytime a filter is changed
   const changeFilters = (newFilter: partialFilter) => {
     setFilters((filter) => ({ ...filter, ...newFilter }));
     console.log(newFilter);
   };
 
+  //creates a search state
+  const [search, setSearch] = useState<string>("")
+
   //setting up logic for form modal and editing
   const [isFormModalOpen, setisFormModalOpen] = useState<boolean>(false);
 
+  //saves task to be editted to a save state
   const [editTask, setEditTask] = useState<Task>();
   const formModalRef = useRef<HTMLDialogElement>(null);
 
@@ -65,6 +70,11 @@ export default function Dashboard() {
       throw new Error("Could not delete task");
     }
   };
+
+  //sets search data to search
+  const handleSearch = (inputSearch: string) => {
+    setSearch(inputSearch);
+  }
 
   //changes status based on user input
   const handleStatusChange = (taskId: number, status: Status) => {
@@ -132,6 +142,8 @@ export default function Dashboard() {
         onChange={changeFilters}
         categoryList={createCategoryList()}
         filters={filters}
+        search={search}
+        onSearch={handleSearch}
       />
       <TaskList
         filters={filters}

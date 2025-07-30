@@ -1,18 +1,25 @@
 import type { Task, TaskListProps } from "../../types";
-import { filterItems } from "../../utils/taskUtils";
+import { filterItems, searchTasks } from "../../utils/taskUtils";
 import TaskItem from "./TaskItem";
 
-export default function TaskList({ tasks, onDelete, onEdit, onStatusChange, filters }: TaskListProps) {
-  
-  const filteredList = (taskList: Task[]) => filterItems(filters, taskList)
-  
-  
+export default function TaskList({
+  tasks,
+  search,
+  filters,
+  onDelete,
+  onEdit,
+  onStatusChange,
+}: TaskListProps) {
+  const displayList = (taskList: Task[]) => {
+    const filteredList = filterItems(filters, taskList);
+    return searchTasks(filteredList, search);
+  };
+
   return (
     <ul>
       {!tasks[0] && <p>No tasks match your search/filter</p>}
 
-      
-      {filteredList(tasks).map((task) => {
+      {displayList(tasks).map((task) => {
         return (
           <TaskItem
             key={task.id}

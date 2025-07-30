@@ -51,6 +51,8 @@ export interface TaskFilterProps {
   categoryList: string[];
   onChange: (arg0: partialFilter) => void;
   filters: filterObject;
+  search: string;
+  onSearch: (arg0: string) => void;
 }
 
 export interface filterObject {

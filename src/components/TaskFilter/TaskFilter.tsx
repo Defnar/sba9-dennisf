@@ -5,6 +5,8 @@ export default function TaskFilter({
   categoryList,
   onChange,
   filters,
+  search,
+  onSearch,
 }: TaskFilterProps) {
   //creates lists of priority, category, and category, passes them through a switch to develop each one
   const dropDownBuilder = (
@@ -49,17 +51,22 @@ export default function TaskFilter({
     }
   };
 
+  //handles changes for the dropdown menus
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const name = event.target.name;
     switch (name) {
       case "status":
-        
         return onChange({ status: event.target.value as Status });
       case "category":
         return onChange({ category: event.target.value });
       case "priority":
         return onChange({ priority: event.target.value as Priority });
     }
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputSearch = event.target.value.trim();
+    onSearch(inputSearch);
   };
 
   return (
@@ -91,6 +98,14 @@ export default function TaskFilter({
           {dropDownBuilder("Priority")}
         </select>
       </div>
+
+      <input
+        type="text"
+        placeholder="search"
+        aria-label="search bar"
+        value={search}
+        onChange={handleSearch}
+      />
     </div>
   );
 }
