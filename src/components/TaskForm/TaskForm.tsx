@@ -70,8 +70,8 @@ export default function TaskForm({
     }
     //I quick fixed because I didn't like the yellow line, but putting dependency on resetform
     //caused it to run every frame per vs warnings.  No lines = happy code
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen] )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   //construct priority list
   const constructPriorityList = () => {
@@ -109,9 +109,11 @@ export default function TaskForm({
       case "new-category":
         setTaskInfo((info) => ({ ...info, category: value }));
         return;
-      case "due-date":
-        setTaskInfo((info) => ({ ...info, dueDate: new Date(value) }));
+      case "due-date": {
+        const timeValue = event.target as HTMLInputElement;
+        setTaskInfo((info) => ({ ...info, dueDate: timeValue.valueAsDate as Date}));
         return;
+      }
       case "priority":
         setTaskInfo((info) => ({ ...info, priority: value as Priority }));
         return;
@@ -129,7 +131,7 @@ export default function TaskForm({
     const taskCat = taskInfo.category.trim();
     //check validation of input fields
     if (
-      !validateStringLength("Task name", taskName, nameMin, nameMax) &&
+      !validateStringLength("Task name", taskName, nameMin, nameMax) ||
       !validateStringLength("category", taskCat, catMin, catMax)
     )
       return;
@@ -195,8 +197,13 @@ export default function TaskForm({
       )}
 
       <label htmlFor="due-date">Due By: </label>
-      <input type="date" name="due-date" id="due-date" value={dateToFormString(taskInfo.dueDate)}
-      onChange={handleDataChange} />
+      <input
+        type="date"
+        name="due-date"
+        id="due-date"
+        value={dateToFormString(taskInfo.dueDate)}
+        onChange={handleDataChange}
+      />
 
       <label htmlFor="priority">Priority: </label>
       <select

@@ -54,8 +54,8 @@ export default function TaskItem({
 
   useEffect(
     () =>
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       checkOverdue(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [task.dueDate]
   );
   //passes task id into callback functions for changing status, handling

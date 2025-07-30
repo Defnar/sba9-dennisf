@@ -90,7 +90,11 @@ export function sortTasks(tasks: Task[], sortCategory: sortCategory, sortOrder: 
 
 }
 
+
+function dateOnly(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+}
 export function checkIfOverdue(date: Date): boolean {
-  if (date < new Date()) return true;
-  return false;
+  const today = dateOnly(new Date());
+  return dateOnly(date) < today;
 }
