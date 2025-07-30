@@ -5,6 +5,7 @@ import { formLimits } from "./FormConfig";
 
 export default function TaskForm({
   task,
+  isOpen,
   onDataSubmit,
   categoryList,
 }: TaskFormProps) {
@@ -62,6 +63,15 @@ export default function TaskForm({
       );
     });
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+    //I quick fixed because I didn't like the yellow line, but putting dependency on resetform
+    //caused it to run every frame per vs warnings.  No lines = happy code
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen] )
 
   //construct priority list
   const constructPriorityList = () => {

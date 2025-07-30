@@ -137,6 +137,7 @@ export default function Dashboard() {
         <TaskForm
           categoryList={createCategoryList()}
           onDataSubmit={onDataSubmit}
+          isOpen={isFormModalOpen}
           task={editTask}
         />
       </dialog>
