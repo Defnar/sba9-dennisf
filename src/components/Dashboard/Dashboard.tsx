@@ -129,7 +129,7 @@ export default function Dashboard() {
 
   //return function to display objects in dashboard
   return (
-    <>
+    <div className="flex flex-col">
       <dialog ref={formModalRef} onClose={() => setisFormModalOpen(false)}>
         <TaskForm
           categoryList={createCategoryList()}
@@ -145,7 +145,7 @@ export default function Dashboard() {
         search={search}
         onSearch={handleSearch}
       />
-      <button type="button" onClick={() => setisFormModalOpen(true)}>
+      <button type="button" className="self-end bg-green-400 rounded-sm my-3 w-fit px-5 py-2 font-bold" onClick={() => setisFormModalOpen(true)}>
         Add New Task
       </button>
       <TaskList
@@ -156,6 +156,6 @@ export default function Dashboard() {
         onEdit={handleEdit}
         onStatusChange={handleStatusChange}
       />
-    </>
+    </div>
   );
 }

@@ -90,14 +90,14 @@ export default function TaskItem({
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <select value={task.status} onChange={handleChangeStatus}>
+          <select value={task.status} onChange={handleChangeStatus} className="bg-white rounded-sm">
             {statusDropdown()}
           </select>
         </span>
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <button onClick={() => handleEdit(task)}>Edit</button>
+          <button className="text-blue-800" onClick={() => handleEdit(task)}>Edit</button>
         </span>
       </td>
       <td>
