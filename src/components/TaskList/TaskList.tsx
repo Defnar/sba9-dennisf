@@ -72,31 +72,31 @@ export default function TaskList({
   };
 
   return (
-    <div className="bg-blue-50 pt-5 rounded-md">
+    <div className="bg-blue-50 rounded-md">
       <table className="table-fixed border-collapse">
         <thead>
           <tr>
-            <th className="w-3xs" onClick={() => handleSort("name")}>
+            <th className="w-3xs rounded-md h-1.5 hover:bg-blue-400 hover:cursor-pointer" onClick={() => handleSort("name")}>
               <span className="flex flex-row justify-center">
                 Name {sortIcon("name")}
               </span>
             </th>
-            <th className="w-3xs" onClick={() => handleSort("category")}>
+            <th className="w-3x rounded-md h-1.5  hover:bg-blue-400 hover:cursor-pointer" onClick={() => handleSort("category")}>
               <span className="flex flex-row justify-center">
                 Category {sortIcon("category")}
               </span>
             </th>
-            <th className="w-3xs" onClick={() => handleSort("priority")}>
+            <th className="w-3xs rounded-md h-1.5 hover:bg-blue-400 hover:cursor-pointer" onClick={() => handleSort("priority")}>
               <span className="flex flex-row justify-center">
                 Priority {sortIcon("priority")}
               </span>
             </th>
-            <th className="w-3xs" onClick={() => handleSort("dueDate")}>
+            <th className="w-3xs rounded-md h-1.5 hover:bg-blue-400 hover:cursor-pointer" onClick={() => handleSort("dueDate")}>
               <span className="flex flex-row justify-center">
                 Due Date {sortIcon("dueDate")}
               </span>
             </th>
-            <th className="w-3xs" onClick={() => handleSort("status")}>
+            <th className="w-3xs rounded-md h-1.5 hover:bg-blue-400 hover:cursor-pointer" onClick={() => handleSort("status")}>
               <span className="flex flex-row justify-center">
                 Status {sortIcon("status")}
               </span>

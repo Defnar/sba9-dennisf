@@ -90,20 +90,20 @@ export default function TaskItem({
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <select value={task.status} onChange={handleChangeStatus} className="bg-white rounded-sm">
+          <select value={task.status} onChange={handleChangeStatus} className="bg-white shadow-sm rounded-sm hover:bg-blue-300">
             {statusDropdown()}
           </select>
         </span>
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <button className="text-blue-800" onClick={() => handleEdit(task)}>Edit</button>
+          <button className="text-blue-800 hover:cursor-pointer" onClick={() => handleEdit(task)}>Edit</button>
         </span>
       </td>
       <td>
         <span className="flex flex-row justify-center">
           <button
-            className="text-red-500"
+            className="text-red-500 hover:cursor-pointer"
             onClick={() => handleDelete(task.id)}
           >
             Del

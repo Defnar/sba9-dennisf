@@ -145,7 +145,7 @@ export default function Dashboard() {
         search={search}
         onSearch={handleSearch}
       />
-      <button type="button" className="self-end bg-green-400 rounded-sm my-3 w-fit px-5 py-2 font-bold" onClick={() => setisFormModalOpen(true)}>
+      <button type="button" className="self-end bg-green-400 rounded-sm my-3 w-fit px-5 py-2 font-bold shadow-md hover:cursor-pointer" onClick={() => setisFormModalOpen(true)}>
         Add New Task
       </button>
       <TaskList
