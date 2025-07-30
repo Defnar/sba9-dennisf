@@ -82,3 +82,8 @@ export function sortTasks(tasks: Task[], sortCategory: sortCategory, sortOrder: 
   return (sortOrder==="Asc")? sortedArray : sortedArray.reverse();
 
 }
+
+export function checkIfOverdue(date: Date): boolean {
+  if (date > new Date()) return true;
+  return false;
+}

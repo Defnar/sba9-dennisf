@@ -130,9 +130,6 @@ export default function Dashboard() {
   //return function to display objects in dashboard
   return (
     <>
-      <button type="button" onClick={() => setisFormModalOpen(true)}>
-        Add New Task
-      </button>
       <dialog ref={formModalRef} onClose={() => setisFormModalOpen(false)}>
         <TaskForm
           categoryList={createCategoryList()}
@@ -148,6 +145,9 @@ export default function Dashboard() {
         search={search}
         onSearch={handleSearch}
       />
+      <button type="button" onClick={() => setisFormModalOpen(true)}>
+        Add New Task
+      </button>
       <TaskList
         filters={filters}
         tasks={tasks}

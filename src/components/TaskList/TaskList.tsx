@@ -59,29 +59,50 @@ export default function TaskList({
 
   //sort icons
   const sortIcon = (headerName: string) => {
-    if (headerName !== sort.category) return <ArrowsUpDownIcon className="w-4 h-4" />
+    if (headerName !== sort.category)
+      return <ArrowsUpDownIcon className="w-4 h-4" />;
     switch (sort.order) {
       case "Asc":
-        return <BarsArrowUpIcon className="w-4 h-4"/>;
+        return <BarsArrowUpIcon className="w-4 h-4" />;
       case "Desc":
-        return <BarsArrowDownIcon className="w-4 h-4"/>;
+        return <BarsArrowDownIcon className="w-4 h-4" />;
       default:
-        return <ArrowsUpDownIcon className="w-4 h-4"/>;
+        return <ArrowsUpDownIcon className="w-4 h-4" />;
     }
-  }
+  };
 
   return (
-    <>
-      <table>
+    <div className="bg-blue-50 pt-5 rounded-md">
+      <table className="table-fixed border-collapse">
         <thead>
           <tr>
-            <th onClick={() => handleSort("name")}>Name {sortIcon("name")}</th>
-            <th onClick={() => handleSort("category")}>Category {sortIcon("category")}</th>
-            <th onClick={() => handleSort("priority")}>Priority {sortIcon("priority")}</th>
-            <th onClick={() => handleSort("dueDate")}>Due Date {sortIcon("dueDate")}</th>
-            <th onClick={() => handleSort("status")}>Status {sortIcon("status")}</th>
-            <th>Edit</th>
-            <th>Del</th>
+            <th className="w-3xs" onClick={() => handleSort("name")}>
+              <span className="flex flex-row justify-center">
+                Name {sortIcon("name")}
+              </span>
+            </th>
+            <th className="w-3xs" onClick={() => handleSort("category")}>
+              <span className="flex flex-row justify-center">
+                Category {sortIcon("category")}
+              </span>
+            </th>
+            <th className="w-3xs" onClick={() => handleSort("priority")}>
+              <span className="flex flex-row justify-center">
+                Priority {sortIcon("priority")}
+              </span>
+            </th>
+            <th className="w-3xs" onClick={() => handleSort("dueDate")}>
+              <span className="flex flex-row justify-center">
+                Due Date {sortIcon("dueDate")}
+              </span>
+            </th>
+            <th className="w-3xs" onClick={() => handleSort("status")}>
+              <span className="flex flex-row justify-center">
+                Status {sortIcon("status")}
+              </span>
+            </th>
+            <th className="w-10">Edit</th>
+            <th className="w-10">Del</th>
           </tr>
         </thead>
         <tbody>
@@ -100,6 +121,6 @@ export default function TaskList({
       </table>
 
       {!tasks[0] && <p>No tasks match your search/filter</p>}
-    </>
+    </div>
   );
 }

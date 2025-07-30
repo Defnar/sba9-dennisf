@@ -1,4 +1,4 @@
-import type { Status, Task, TaskProps } from "../../types";
+import type { Priority, Status, Task, TaskProps } from "../../types";
 import { dateToString } from "../../utils/taskUtils";
 
 export default function TaskItem({
@@ -22,6 +22,19 @@ export default function TaskItem({
     });
   };
 
+  const setPriorityStyle = (priority: Priority): string => {
+    switch (priority) {
+      case "Low":
+        return "text-green-700 flex flex-row justify-center";
+      case "Medium":
+        return "text-black flex flex-row justify-center";
+      case "High":
+        return "text-red-500 flex flex-row justify-center";
+      default:
+        return "";
+    }
+  };
+
   //passes task id into callback functions for changing status, handling
   const handleDelete = (taskId: number) => {
     onDelete(taskId);
@@ -37,21 +50,42 @@ export default function TaskItem({
   };
 
   return (
-    <tr>
-      <td>{task.name}</td>
-      <td>{task.category}</td>
-      <td>{task.priority}</td>
-      <td>{dateToString(task.dueDate)}</td>
+    <tr className="h-12 border-t border-gray-300">
       <td>
-        <select value={task.status} onChange={handleChangeStatus}>
-          {statusDropdown()}
-        </select>
+        <span className="flex flex-row justify-center">{task.name}</span>
       </td>
       <td>
-        <button onClick={() => handleEdit(task)}>Edit</button>
+        <span className="flex flex-row justify-center">{task.category}</span>
       </td>
       <td>
-        <button onClick={() => handleDelete(task.id)}>Del</button>
+        <span className={setPriorityStyle(task.priority)}>{task.priority}</span>
+      </td>
+      <td>
+        <span className="flex flex-row justify-center">
+          {dateToString(task.dueDate)}
+        </span>
+      </td>
+      <td>
+        <span className="flex flex-row justify-center">
+          <select value={task.status} onChange={handleChangeStatus}>
+            {statusDropdown()}
+          </select>
+        </span>
+      </td>
+      <td>
+        <span className="flex flex-row justify-center">
+          <button onClick={() => handleEdit(task)}>Edit</button>
+        </span>
+      </td>
+      <td>
+        <span className="flex flex-row justify-center">
+          <button
+            className="text-red-500"
+            onClick={() => handleDelete(task.id)}
+          >
+            Del
+          </button>
+        </span>
       </td>
     </tr>
   );
