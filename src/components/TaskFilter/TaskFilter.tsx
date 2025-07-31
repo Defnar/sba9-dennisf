@@ -1,5 +1,6 @@
 import type React from "react";
 import type { Priority, Status, TaskFilterProps } from "../../types";
+import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 
 export default function TaskFilter({
   categoryList,
@@ -69,43 +70,53 @@ export default function TaskFilter({
     onSearch(inputSearch);
   };
 
-  return (
-    <div>
-      <h2>Filter By: </h2>
-      <div>
-        <select
-          aria-label="status filter"
-          name="status"
-          value={filters.status}
-          onChange={handleChange}
-        >
-          {dropDownBuilder("Status")}
-        </select>
-        <select
-          aria-label="category filter"
-          name="category"
-          value={filters.category}
-          onChange={handleChange}
-        >
-          {dropDownBuilder("Category")}
-        </select>
-        <select
-          aria-label="priority filter"
-          name="priority"
-          value={filters.priority}
-          onChange={handleChange}
-        >
-          {dropDownBuilder("Priority")}
-        </select>
-      </div>
+  const dropDownClassNames = "bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
 
-      <input
-        type="text"
-        placeholder="search"
-        aria-label="search bar"
-        value={search}
-        onChange={handleSearch}
-      />
+  return (
+    <div className="flex flex-row justify-between gap-4">
+      <div>
+        <div className="flex flex-row gap-4 justify-evenly">
+          <select
+            aria-label="status filter"
+            name="status"
+            className={dropDownClassNames}
+            value={filters.status}
+            onChange={handleChange}
+          >
+            {dropDownBuilder("Status")}
+          </select>
+          <select
+            aria-label="category filter"
+            name="category"
+            className={dropDownClassNames}
+            value={filters.category}
+            onChange={handleChange}
+          >
+            {dropDownBuilder("Category")}
+          </select>
+          <select
+            aria-label="priority filter"
+            name="priority"
+            className={dropDownClassNames}
+            value={filters.priority}
+            onChange={handleChange}
+          >
+            {dropDownBuilder("Priority")}
+          </select>
+        </div>
+      </div>
+      <div className="relative h-12 grow min-w-50 max-w-125 shrink">
+        <input
+          type="text"
+          placeholder="search"
+          aria-label="search bar"
+          name="search-bar"
+          className="shadow-sm bg-white w-full shrink rounded-sm shadow-sm h-10 px-5"
+          value={search}
+          onChange={handleSearch}
+        />
+        <MagnifyingGlassIcon className="h-4 w-4 absolute right-5 bottom-5" />
+      </div>
     </div>
   );
 }

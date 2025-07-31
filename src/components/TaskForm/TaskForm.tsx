@@ -6,8 +6,9 @@ import { formLimits } from "./FormConfig";
 export default function TaskForm({
   task,
   isOpen,
-  onDataSubmit,
   categoryList,
+  onDataSubmit,
+  onClose,
 }: TaskFormProps) {
   //pulls new tracker, or in the case of no stored id, starts at 1
   const [idTracker, setIdTracker] = useState<number>(
@@ -39,6 +40,7 @@ export default function TaskForm({
       status: "Pending",
       priority: "Low",
     });
+    setCatDropDown(true);
   };
 
   //sets the data to the form for edit
@@ -111,7 +113,10 @@ export default function TaskForm({
         return;
       case "due-date": {
         const timeValue = event.target as HTMLInputElement;
-        setTaskInfo((info) => ({ ...info, dueDate: timeValue.valueAsDate as Date}));
+        setTaskInfo((info) => ({
+          ...info,
+          dueDate: timeValue.valueAsDate as Date,
+        }));
         return;
       }
       case "priority":
@@ -145,7 +150,9 @@ export default function TaskForm({
         localStorage.setItem("idTracker", newId.toString());
         return newId;
       });
+      alert("Task submitted successfully")
       resetForm();
+      onClose();
     } catch (error) {
       console.log(error);
       throw new Error("Failed to add or update task");
@@ -153,18 +160,24 @@ export default function TaskForm({
   };
 
   return (
-    <form onSubmit={dataSubmitHandler}>
-      <label htmlFor="name">Name: </label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        autoFocus={true}
-        minLength={formLimits.taskName.minLength}
-        maxLength={formLimits.taskName.maxlength}
-        value={taskInfo.name}
-        onChange={handleDataChange}
-      />
+    <form
+      onSubmit={dataSubmitHandler}
+      className="flex flex-col justify-content-center align-content-start gap-5"
+    >
+      <div>
+        <label htmlFor="name">Name: </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-5"
+          autoFocus={true}
+          minLength={formLimits.taskName.minLength}
+          maxLength={formLimits.taskName.maxlength}
+          value={taskInfo.name}
+          onChange={handleDataChange}
+        />
+      </div>
       {/*If new category is not selected, this is visible*/}
       {catDropDown && (
         <div>
@@ -173,6 +186,7 @@ export default function TaskForm({
             id="category"
             name="category"
             onChange={handleDataChange}
+            className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
             value={taskInfo.category ? taskInfo.category : "Select A Category"}
           >
             {constructCategoryList()}
@@ -186,6 +200,8 @@ export default function TaskForm({
           <input
             type="text"
             name="new-category"
+            className="bg-white rounded-sm w-50 h-10 text-center shadow-md"
+            autoFocus={true}
             id="new-category"
             value={taskInfo.category}
             onChange={handleDataChange}
@@ -195,26 +211,36 @@ export default function TaskForm({
           <button onClick={() => setCatDropDown(true)}>Cancel</button>
         </div>
       )}
-
-      <label htmlFor="due-date">Due By: </label>
-      <input
-        type="date"
-        name="due-date"
-        id="due-date"
-        value={dateToFormString(taskInfo.dueDate)}
-        onChange={handleDataChange}
-      />
-
-      <label htmlFor="priority">Priority: </label>
-      <select
-        value={taskInfo.priority}
-        name="priority"
-        id="priority"
-        onChange={handleDataChange}
-      >
-        {constructPriorityList()}
-      </select>
-      <button type="submit">Submit</button>
+      <div>
+        <label htmlFor="due-date">Due By: </label>
+        <input
+          type="date"
+          name="due-date"
+          className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-4"
+          id="due-date"
+          value={dateToFormString(taskInfo.dueDate)}
+          onChange={handleDataChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="priority">Priority: </label>
+        <select
+          value={taskInfo.priority}
+          name="priority"
+          id="priority"
+          className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md ml-4"
+          onChange={handleDataChange}
+        >
+          {constructPriorityList()}
+        </select>
+      </div>
+      <div className="flex justify-center content-center gap-7">
+        <button type="submit" className="bg-green-300 w-25 rounded-sm px-5 py-2 font-bold shadow-md">Submit</button>
+        <button 
+        type="button"
+        className="bg-red-300 w-25 rounded-sm px-5 py-2 font-bold text-black shadow-md"
+        onClick={onClose}>Cancel</button>
+      </div>
     </form>
   );
 }

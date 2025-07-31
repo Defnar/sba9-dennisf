@@ -39,6 +39,7 @@ export interface TaskFormProps {
   task?: Task;
   categoryList: string[];
   isOpen: boolean;
+  onClose: () => void;
   onDataSubmit: (newTask: Task) => void;
 }
 

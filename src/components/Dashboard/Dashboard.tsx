@@ -130,11 +130,12 @@ export default function Dashboard() {
   //return function to display objects in dashboard
   return (
     <div className="flex flex-col">
-      <dialog ref={formModalRef} onClose={() => setisFormModalOpen(false)}>
+      <dialog ref={formModalRef} className="w-100 h-75 self-center justify-self-center rounded-md shadow-md py-4 px-8 bg-blue-100" onClose={() => setisFormModalOpen(false)}>
         <TaskForm
           categoryList={createCategoryList()}
           onDataSubmit={onDataSubmit}
           isOpen={isFormModalOpen}
+          onClose={() => setisFormModalOpen(false)}
           task={editTask}
         />
       </dialog>
