@@ -37,7 +37,7 @@ export default function TaskItem({
   };
 
   const checkOverdue = () => {
-    if (task.status != "Completed") {
+    if (task.status == "Pending" || task.status == "In Progress") {
       if (checkIfOverdue(task.dueDate)) onStatusChange(task.id, "Overdue");
     }
   };
@@ -50,7 +50,7 @@ export default function TaskItem({
     const interval = setInterval(() => checkOverdue(), 30000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [task, onStatusChange]);
+  }, [task]);
 
   useEffect(
     () =>
