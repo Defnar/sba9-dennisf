@@ -26,6 +26,7 @@ export function dateToString(date: Date): string {
 
 //returns formatted string for use by form
 export function dateToFormString(date: Date): string {
+  if (!date) return "";
   return date.toISOString().split("T")[0];
 }
 
