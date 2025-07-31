@@ -136,9 +136,9 @@ export default function Dashboard() {
     }
   };
 
-  const statSection = "flex flex-col justify-center content-center text-center bg-blue-100 w-30 rounded-2xl"
+  const statSection = "flex flex-col justify-center content-center text-center bg-blue-100 dark:bg-slate-800 w-30 rounded-2xl"
   const statTitle = "text-lg"
-  const statNumber = "text-6xl font-light bg-blue-50 rounded-b-2xl"
+  const statNumber = "text-6xl font-light bg-blue-50 dark:bg-slate-700 rounded-b-2xl"
 
   //return function to display objects in dashboard
   return (
@@ -175,7 +175,7 @@ export default function Dashboard() {
       </div>
       <dialog
         ref={formModalRef}
-        className="w-100 h-100 self-center justify-self-center rounded-md shadow-md py-4 px-8 bg-blue-100"
+        className="w-100 h-100 self-center justify-self-center rounded-md shadow-md py-4 px-8 bg-blue-100 dark:bg-slate-900 dark:text-white"
         onClose={() => setisFormModalOpen(false)}
       >
         <TaskForm
@@ -195,7 +195,7 @@ export default function Dashboard() {
       />
       <button
         type="button"
-        className="self-end bg-green-400 rounded-sm w-fit px-5 py-2 font-bold shadow-md hover:cursor-pointer"
+        className="self-end bg-green-400 dark:bg-green-800 rounded-sm w-fit px-5 py-2 font-bold shadow-md hover:cursor-pointer"
         onClick={() => setisFormModalOpen(true)}
       >
         Add New Task

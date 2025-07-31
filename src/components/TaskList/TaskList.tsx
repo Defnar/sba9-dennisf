@@ -71,10 +71,10 @@ export default function TaskList({
     }
   };
 
-  const headerStyling = "w-3xs rounded-md hover:bg-blue-400 hover:cursor-pointer"
+  const headerStyling = "w-3xs rounded-md hover:bg-blue-400 dark:hover:bg-slate-600 hover:cursor-pointer"
   
   return (
-    <div className="bg-blue-50 rounded-md">
+    <div className="bg-blue-50 dark:bg-slate-800 rounded-md">
       <table className="table-fixed border-collapse">
         <thead className="h-12">
           <tr>

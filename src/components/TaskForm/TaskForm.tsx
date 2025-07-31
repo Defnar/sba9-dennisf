@@ -171,7 +171,7 @@ export default function TaskForm({
             type="text"
             id="name"
             name="name"
-            className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-5"
+            className="bg-white dark:bg-slate-700 rounded-sm w-50 h-10 text-center shadow-md ml-5"
             autoFocus={true}
             minLength={formLimits.taskName.minLength}
             maxLength={formLimits.taskName.maxlength}
@@ -187,7 +187,7 @@ export default function TaskForm({
               id="category"
               name="category"
               onChange={handleDataChange}
-              className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
+              className="bg-white dark:bg-slate-700 rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
               value={
                 taskInfo.category ? taskInfo.category : "Select A Category"
               }
@@ -203,7 +203,7 @@ export default function TaskForm({
             <input
               type="text"
               name="new-category"
-              className="bg-white rounded-sm w-25 h-10 text-center shadow-md mr-2"
+              className="bg-white dark:bg-slate-700 rounded-sm w-25 h-10 text-center shadow-md mr-2"
               autoFocus={true}
               id="new-category"
               value={taskInfo.category}
@@ -211,7 +211,7 @@ export default function TaskForm({
               minLength={formLimits.taskCategory.minLength}
               maxLength={formLimits.taskCategory.maxLength}
             />
-            <button className="bg-red-300 h-10 rounded-sm px-5 py-2 text-black shadow-md" onClick={() => setCatDropDown(true)}>Cancel</button>
+            <button className="bg-red-300 dark:bg-red-400 font-bold h-10 rounded-sm px-5 py-2 text-black shadow-md" onClick={() => setCatDropDown(true)}>Cancel</button>
           </div>
         )}
         <div>
@@ -219,7 +219,7 @@ export default function TaskForm({
           <input
             type="date"
             name="due-date"
-            className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-4"
+            className="bg-white dark:bg-slate-700 rounded-sm w-50 h-10 text-center shadow-md ml-4"
             id="due-date"
             value={dateToFormString(taskInfo.dueDate)}
             onChange={handleDataChange}
@@ -231,7 +231,7 @@ export default function TaskForm({
             value={taskInfo.priority}
             name="priority"
             id="priority"
-            className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md ml-4"
+            className="bg-white dark:bg-slate-700 rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md ml-4"
             onChange={handleDataChange}
           >
             {constructPriorityList()}
@@ -240,13 +240,13 @@ export default function TaskForm({
         <div className="flex justify-center content-center gap-7">
           <button
             type="submit"
-            className="bg-green-300 w-25 rounded-sm px-5 py-2 font-bold shadow-md"
+            className="bg-green-300 dark:bg-green-800 w-25 rounded-sm px-5 py-2 font-bold shadow-md"
           >
             Submit
           </button>
           <button
             type="button"
-            className="bg-red-300 w-25 rounded-sm px-5 py-2 font-bold text-black shadow-md"
+            className="bg-red-300 dark:bg-red-400 w-25 rounded-sm px-5 py-2 font-bold text-black shadow-md"
             onClick={onClose}
           >
             Cancel

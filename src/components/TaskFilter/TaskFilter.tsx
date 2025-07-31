@@ -70,7 +70,7 @@ export default function TaskFilter({
     onSearch(inputSearch);
   };
 
-  const dropDownClassNames = "bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
+  const dropDownClassNames = "bg-white dark:bg-slate-700 rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
 
   return (
     <div className="flex flex-row justify-between gap-4">
@@ -111,7 +111,7 @@ export default function TaskFilter({
           placeholder="search"
           aria-label="search bar"
           name="search-bar"
-          className="shadow-sm bg-white w-full shrink rounded-sm shadow-sm h-10 px-5"
+          className="shadow-sm bg-white dark:bg-slate-700 w-full shrink rounded-sm shadow-sm h-10 px-5"
           value={search}
           onChange={handleSearch}
         />

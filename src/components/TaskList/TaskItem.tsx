@@ -26,11 +26,11 @@ export default function TaskItem({
   const setPriorityStyle = (priority: Priority): string => {
     switch (priority) {
       case "Low":
-        return "text-green-700 flex flex-row justify-center";
+        return "text-green-700 dark:text-green-400 flex flex-row justify-center";
       case "Medium":
-        return "text-black flex flex-row justify-center";
+        return "text-black dark:text-white flex flex-row justify-center";
       case "High":
-        return "text-red-500 flex flex-row justify-center";
+        return "text-red-500 dark:text-red-400 flex flex-row justify-center";
       default:
         return "";
     }
@@ -73,7 +73,7 @@ export default function TaskItem({
   };
 
   return (
-    <tr className="h-12 border-t border-gray-300">
+    <tr className="h-12 border-t border-gray-600">
       <td>
         <span className="flex flex-row justify-center">{task.name}</span>
       </td>
@@ -90,20 +90,20 @@ export default function TaskItem({
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <select value={task.status} onChange={handleChangeStatus} className="bg-white shadow-sm rounded-sm hover:bg-blue-300">
+          <select value={task.status} onChange={handleChangeStatus} className="bg-white dark:bg-slate-700 hover:bg-slate-600 shadow-sm rounded-sm hover:bg-blue-300">
             {statusDropdown()}
           </select>
         </span>
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <button className="text-blue-800 hover:cursor-pointer" onClick={() => handleEdit(task)}>Edit</button>
+          <button className="text-blue-800 dark:text-blue-200 hover:cursor-pointer" onClick={() => handleEdit(task)}>Edit</button>
         </span>
       </td>
       <td>
         <span className="flex flex-row justify-center">
           <button
-            className="text-red-500 hover:cursor-pointer"
+            className="text-red-500 dark:text-red-400 hover:cursor-pointer"
             onClick={() => handleDelete(task.id)}
           >
             Del
