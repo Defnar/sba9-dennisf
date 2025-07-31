@@ -122,7 +122,7 @@ export default function TaskList({
         </tbody>
       </table>
 
-      {!tasks[0] && <p>No tasks match your search/filter</p>}
+      {!tasks[0] && <p className="text-center">No tasks match your search/filter</p>}
     </div>
   );
 }

@@ -150,7 +150,7 @@ export default function TaskForm({
         localStorage.setItem("idTracker", newId.toString());
         return newId;
       });
-      alert("Task submitted successfully")
+      alert("Task submitted successfully");
       resetForm();
       onClose();
     } catch (error) {
@@ -160,87 +160,99 @@ export default function TaskForm({
   };
 
   return (
-    <form
-      onSubmit={dataSubmitHandler}
-      className="flex flex-col justify-center content-start gap-5"
-    >
-      <div>
-        <label htmlFor="name">Name: </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-5"
-          autoFocus={true}
-          minLength={formLimits.taskName.minLength}
-          maxLength={formLimits.taskName.maxlength}
-          value={taskInfo.name}
-          onChange={handleDataChange}
-        />
-      </div>
-      {/*If new category is not selected, this is visible*/}
-      {catDropDown && (
+    <div className="flex justify-center content-center w-full h-full">
+      <form
+        onSubmit={dataSubmitHandler}
+        className="flex flex-col justify-center content-start gap-5 pr-5"
+      >
         <div>
-          <label htmlFor="category">Category: </label>
-          <select
-            id="category"
-            name="category"
-            onChange={handleDataChange}
-            className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
-            value={taskInfo.category ? taskInfo.category : "Select A Category"}
-          >
-            {constructCategoryList()}
-          </select>
-        </div>
-      )}
-      {/*if new category is selected, the dropdown becomes invisible and this is rendered*/}
-      {!catDropDown && (
-        <div>
-          <label htmlFor="new-category">New Category: </label>
+          <label htmlFor="name">Name: </label>
           <input
             type="text"
-            name="new-category"
-            className="bg-white rounded-sm w-50 h-10 text-center shadow-md"
+            id="name"
+            name="name"
+            className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-5"
             autoFocus={true}
-            id="new-category"
-            value={taskInfo.category}
+            minLength={formLimits.taskName.minLength}
+            maxLength={formLimits.taskName.maxlength}
+            value={taskInfo.name}
             onChange={handleDataChange}
-            minLength={formLimits.taskCategory.minLength}
-            maxLength={formLimits.taskCategory.maxLength}
           />
-          <button onClick={() => setCatDropDown(true)}>Cancel</button>
         </div>
-      )}
-      <div>
-        <label htmlFor="due-date">Due By: </label>
-        <input
-          type="date"
-          name="due-date"
-          className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-4"
-          id="due-date"
-          value={dateToFormString(taskInfo.dueDate)}
-          onChange={handleDataChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="priority">Priority: </label>
-        <select
-          value={taskInfo.priority}
-          name="priority"
-          id="priority"
-          className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md ml-4"
-          onChange={handleDataChange}
-        >
-          {constructPriorityList()}
-        </select>
-      </div>
-      <div className="flex justify-center content-center gap-7">
-        <button type="submit" className="bg-green-300 w-25 rounded-sm px-5 py-2 font-bold shadow-md">Submit</button>
-        <button 
-        type="button"
-        className="bg-red-300 w-25 rounded-sm px-5 py-2 font-bold text-black shadow-md"
-        onClick={onClose}>Cancel</button>
-      </div>
-    </form>
+        {/*If new category is not selected, this is visible*/}
+        {catDropDown && (
+          <div>
+            <label htmlFor="category">Category: </label>
+            <select
+              id="category"
+              name="category"
+              onChange={handleDataChange}
+              className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md"
+              value={
+                taskInfo.category ? taskInfo.category : "Select A Category"
+              }
+            >
+              {constructCategoryList()}
+            </select>
+          </div>
+        )}
+        {/*if new category is selected, the dropdown becomes invisible and this is rendered*/}
+        {!catDropDown && (
+          <div>
+            <label htmlFor="new-category">New Category: </label>
+            <input
+              type="text"
+              name="new-category"
+              className="bg-white rounded-sm w-50 h-10 text-center shadow-md"
+              autoFocus={true}
+              id="new-category"
+              value={taskInfo.category}
+              onChange={handleDataChange}
+              minLength={formLimits.taskCategory.minLength}
+              maxLength={formLimits.taskCategory.maxLength}
+            />
+            <button onClick={() => setCatDropDown(true)}>Cancel</button>
+          </div>
+        )}
+        <div>
+          <label htmlFor="due-date">Due By: </label>
+          <input
+            type="date"
+            name="due-date"
+            className="bg-white rounded-sm w-50 h-10 text-center shadow-md ml-4"
+            id="due-date"
+            value={dateToFormString(taskInfo.dueDate)}
+            onChange={handleDataChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="priority">Priority: </label>
+          <select
+            value={taskInfo.priority}
+            name="priority"
+            id="priority"
+            className="bg-white rounded-sm w-50 h-10 text-center hover:cursor-pointer shadow-md ml-4"
+            onChange={handleDataChange}
+          >
+            {constructPriorityList()}
+          </select>
+        </div>
+        <div className="flex justify-center content-center gap-7">
+          <button
+            type="submit"
+            className="bg-green-300 w-25 rounded-sm px-5 py-2 font-bold shadow-md"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            className="bg-red-300 w-25 rounded-sm px-5 py-2 font-bold text-black shadow-md"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

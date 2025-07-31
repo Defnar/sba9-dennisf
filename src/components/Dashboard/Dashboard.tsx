@@ -175,7 +175,7 @@ export default function Dashboard() {
       </div>
       <dialog
         ref={formModalRef}
-        className="w-100 h-75 self-center justify-self-center rounded-md shadow-md py-4 px-8 bg-blue-100"
+        className="w-100 h-100 self-center justify-self-center rounded-md shadow-md py-4 px-8 bg-blue-100"
         onClose={() => setisFormModalOpen(false)}
       >
         <TaskForm
