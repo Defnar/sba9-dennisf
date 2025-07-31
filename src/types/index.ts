@@ -73,3 +73,12 @@ export interface sortParameters{
   order: Order
 }
 
+export interface StatCounter{
+  low: number,
+  medium: number,
+  high: number,
+  pending: number,
+  inProgress: number,
+  overdue: number,
+  completed: number
+}

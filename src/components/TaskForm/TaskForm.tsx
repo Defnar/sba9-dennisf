@@ -162,7 +162,7 @@ export default function TaskForm({
   return (
     <form
       onSubmit={dataSubmitHandler}
-      className="flex flex-col justify-content-center align-content-start gap-5"
+      className="flex flex-col justify-center content-start gap-5"
     >
       <div>
         <label htmlFor="name">Name: </label>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type {
+  StatCounter,
   filterObject,
   partialFilter,
   Status,
@@ -9,7 +10,7 @@ import type {
 import TaskList from "../TaskList/TaskList";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskFilter from "../TaskFilter/TaskFilter";
-import { JsonToTask } from "../../utils/taskUtils";
+import { JsonToTask, statCounter } from "../../utils/taskUtils";
 
 export default function Dashboard() {
   //saves the task list
@@ -23,6 +24,14 @@ export default function Dashboard() {
       throw new Error("Could not load storage data");
     }
   });
+
+  //saves the stat list
+  const [stats, setStats] = useState<StatCounter>(statCounter(tasks));
+
+  //call updates anytime task changes
+  useEffect(() => {
+    setStats(statCounter(tasks));
+  }, [tasks]);
 
   //filter list
   const [filters, setFilters] = useState<filterObject>({
@@ -38,7 +47,7 @@ export default function Dashboard() {
   };
 
   //creates a search state
-  const [search, setSearch] = useState<string>("")
+  const [search, setSearch] = useState<string>("");
 
   //setting up logic for form modal and editing
   const [isFormModalOpen, setisFormModalOpen] = useState<boolean>(false);
@@ -74,8 +83,8 @@ export default function Dashboard() {
   //sets search data to search
   const handleSearch = (inputSearch: string) => {
     setSearch(inputSearch);
-    console.log("searching: " + search)
-  }
+    console.log("searching: " + search);
+  };
 
   //changes status based on user input
   const handleStatusChange = (taskId: number, status: Status) => {
@@ -121,16 +130,54 @@ export default function Dashboard() {
           localStorage.setItem("tasks", JSON.stringify(newTaskList));
           return newTaskList;
         });
-    } catch (error){
+    } catch (error) {
       console.error(error);
       throw new Error("Could not save task");
     }
   };
 
+  const statSection = "flex flex-col justify-center content-center text-center bg-blue-100 w-30 rounded-2xl"
+  const statTitle = "text-lg"
+  const statNumber = "text-6xl font-light bg-blue-50 rounded-b-2xl"
+
   //return function to display objects in dashboard
   return (
-    <div className="flex flex-col">
-      <dialog ref={formModalRef} className="w-100 h-75 self-center justify-self-center rounded-md shadow-md py-4 px-8 bg-blue-100" onClose={() => setisFormModalOpen(false)}>
+    <div className="flex flex-col gap-5">
+      <div className="flex justify-evenly gap-2">
+        <div className={statSection}>
+          <h2 className={statTitle}>Complete</h2>
+          <span className={statNumber}>{stats.completed}</span>
+        </div>
+        <div className={statSection}>
+          <h2 className={statTitle}>In Progress</h2>
+          <span className={statNumber}>{stats.inProgress}</span>
+        </div>
+        <div className={statSection}>
+          <h2 className={statTitle}>Pending</h2>
+          <span className={statNumber}>{stats.pending}</span>
+        </div>
+        <div className={statSection}>
+          <h2 className={statTitle}>Overdue</h2>
+          <span className={statNumber}>{stats.overdue}</span>
+        </div>
+        <div className={statSection}>
+          <h2 className={statTitle}>Low</h2>
+          <span className={statNumber}>{stats.low}</span>
+        </div>
+        <div className={statSection}>
+          <h2 className={statTitle}>Medium</h2>
+          <span className={statNumber}>{stats.medium}</span>
+        </div>
+        <div className={statSection}>
+          <h2 className={statTitle}>High</h2>
+          <span className={statNumber}>{stats.high}</span>
+        </div>
+      </div>
+      <dialog
+        ref={formModalRef}
+        className="w-100 h-75 self-center justify-self-center rounded-md shadow-md py-4 px-8 bg-blue-100"
+        onClose={() => setisFormModalOpen(false)}
+      >
         <TaskForm
           categoryList={createCategoryList()}
           onDataSubmit={onDataSubmit}
@@ -146,7 +193,11 @@ export default function Dashboard() {
         search={search}
         onSearch={handleSearch}
       />
-      <button type="button" className="self-end bg-green-400 rounded-sm my-3 w-fit px-5 py-2 font-bold shadow-md hover:cursor-pointer" onClick={() => setisFormModalOpen(true)}>
+      <button
+        type="button"
+        className="self-end bg-green-400 rounded-sm w-fit px-5 py-2 font-bold shadow-md hover:cursor-pointer"
+        onClick={() => setisFormModalOpen(true)}
+      >
         Add New Task
       </button>
       <TaskList

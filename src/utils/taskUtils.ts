@@ -1,4 +1,4 @@
-import type { filterObject, sortCategory, StorageTask, Task } from "../types";
+import type { filterObject, sortCategory, StatCounter, StorageTask, Task } from "../types";
 
 export function filterItems(filters: filterObject, tasks: Task[]): Task[] {
   return tasks.filter((task) => {
@@ -98,3 +98,43 @@ export function checkIfOverdue(date: Date): boolean {
   const today = dateOnly(new Date());
   return dateOnly(date) < today;
 }
+
+export function statCounter(tasks: Task[]): StatCounter {
+  const stats: StatCounter= {
+    low: 0,
+    medium: 0,
+    high: 0,
+    pending: 0,
+    inProgress: 0,
+    overdue: 0,
+    completed: 0
+  }
+
+  if (tasks.length === 0) return stats;
+
+  for(const task of tasks) {
+    const taskPrio = task.priority.toLowerCase();
+    stats[taskPrio as "low"|"medium"|"high"]++
+
+    const taskStatus = task.status
+    let statsKey;
+
+    switch (taskStatus) {
+      case "Pending":
+        statsKey = "pending"
+        break
+      case "In Progress":
+        statsKey = "inProgress"
+        break
+      case "Completed":
+        statsKey =  "completed"
+        break
+      case "Overdue":
+        statsKey = "overdue"
+        break
+    }
+    stats[statsKey as keyof typeof stats]++
+  }
+
+  return stats;
+} 
