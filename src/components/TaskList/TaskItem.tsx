@@ -47,17 +47,12 @@ export default function TaskItem({
   //like I just did.  quick fix from vscode for removing line
   //these check overdue on a timer, and on editing the due date for the task
   useEffect(() => {
+    checkOverdue();
     const interval = setInterval(() => checkOverdue(), 30000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task]);
 
-  useEffect(
-    () =>
-      checkOverdue(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [task]
-  );
   //passes task id into callback functions for changing status, handling
   const handleDelete = (taskId: number) => {
     onDelete(taskId);
@@ -90,14 +85,23 @@ export default function TaskItem({
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <select value={task.status} onChange={handleChangeStatus} className="bg-white dark:bg-slate-700 hover:bg-slate-600 shadow-sm rounded-sm hover:bg-blue-300">
+          <select
+            value={task.status}
+            onChange={handleChangeStatus}
+            className="bg-white dark:bg-slate-700 hover:bg-slate-600 shadow-sm rounded-sm hover:bg-blue-300"
+          >
             {statusDropdown()}
           </select>
         </span>
       </td>
       <td>
         <span className="flex flex-row justify-center">
-          <button className="text-blue-800 dark:text-blue-200 hover:cursor-pointer" onClick={() => handleEdit(task)}>Edit</button>
+          <button
+            className="text-blue-800 dark:text-blue-200 hover:cursor-pointer"
+            onClick={() => handleEdit(task)}
+          >
+            Edit
+          </button>
         </span>
       </td>
       <td>
