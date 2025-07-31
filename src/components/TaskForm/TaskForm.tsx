@@ -199,11 +199,11 @@ export default function TaskForm({
         {/*if new category is selected, the dropdown becomes invisible and this is rendered*/}
         {!catDropDown && (
           <div>
-            <label htmlFor="new-category">New Category: </label>
+            <label htmlFor="new-category">Category: </label>
             <input
               type="text"
               name="new-category"
-              className="bg-white rounded-sm w-50 h-10 text-center shadow-md"
+              className="bg-white rounded-sm w-25 h-10 text-center shadow-md mr-2"
               autoFocus={true}
               id="new-category"
               value={taskInfo.category}
@@ -211,7 +211,7 @@ export default function TaskForm({
               minLength={formLimits.taskCategory.minLength}
               maxLength={formLimits.taskCategory.maxLength}
             />
-            <button onClick={() => setCatDropDown(true)}>Cancel</button>
+            <button className="bg-red-300 h-10 rounded-sm px-5 py-2 text-black shadow-md" onClick={() => setCatDropDown(true)}>Cancel</button>
           </div>
         )}
         <div>
