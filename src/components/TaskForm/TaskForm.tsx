@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Priority, Task, TaskFormProps } from "../../types";
-import { dateToFormString, validateStringLength } from "../../utils/taskUtils";
+import { dateToFormString, validateDate, validateStringLength } from "../../utils/taskUtils";
 import { formLimits } from "./FormConfig";
 
 export default function TaskForm({
@@ -134,10 +134,16 @@ export default function TaskForm({
     const catMax = formLimits.taskCategory.maxLength;
     const taskName = taskInfo.name.trim();
     const taskCat = taskInfo.category.trim();
+
+    if (taskCat === "") {
+      alert("Please select or create a category")
+      return
+    }
     //check validation of input fields
     if (
       !validateStringLength("Task name", taskName, nameMin, nameMax) ||
-      !validateStringLength("category", taskCat, catMin, catMax)
+      !validateStringLength("category", taskCat, catMin, catMax) ||
+      !validateDate(taskInfo.dueDate)
     )
       return;
     try {

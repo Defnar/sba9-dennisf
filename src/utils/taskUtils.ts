@@ -60,6 +60,14 @@ export function validateStringLength(
   return true;
 }
 
+export function validateDate(date: Date) {
+  if (isNaN(date.getDate())){
+    alert("Please enter a valid date")
+    return false
+  }
+  return true;
+}
+
 export function sortTasks(tasks: Task[], sortCategory: sortCategory, sortOrder: "Asc" | "Desc" | "None"):Task[] {
   if (sortOrder === "None") return tasks;
   let sortedArray = [...tasks];
